@@ -1,6 +1,5 @@
-package de.uniks.pmws2021.controller.test;
+package de.uniks.pmws2021.controller;
 
-import de.uniks.pmws2021.controller.TemporaryGameController;
 import de.uniks.pmws2021.model.*;
 import org.fulib.FulibTools;
 import org.junit.Test;
