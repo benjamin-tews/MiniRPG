@@ -17,9 +17,11 @@ public class GenModel implements ClassModelDecorator
 		//clas already exists but needed for further associations hero <--> heroStat
 		Clazz hero = mm.haveClass("Hero");
 
+		//build inheritance
 		mm.haveSuper(attackStat, heroStat);
 		mm.haveSuper(defenseStat, heroStat);
 
+		//adding missing attributes
 		mm.haveAttribute(heroStat,"level", Type.INT);
 		mm.haveAttribute(heroStat,"value", Type.INT);
 		mm.haveAttribute(heroStat,"cost", Type.INT);
