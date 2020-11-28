@@ -1,0 +1,67 @@
+<svg width="168px" height="371px"
+ viewBox="0.00 0.00 167.96 371.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1.0 1.0) rotate(0) translate(4 367)">
+<title>de.uniks.pmws2021.model</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-367 163.96,-367 163.96,4 -4,4"/>
+<!-- Dungeon -->
+<g id="node1" class="node">
+<title>Dungeon</title>
+<polygon fill="none" stroke="black" points="9,-337 9,-359 86,-359 86,-337 9,-337"/>
+<text text-anchor="start" x="21.84" y="-343.4" font-family="Times,serif" font-size="14.00">Dungeon</text>
+<polygon fill="none" stroke="black" points="9,-315 9,-337 86,-337 86,-315 9,-315"/>
+<text text-anchor="start" x="12" y="-321.4" font-family="Times,serif" font-size="14.00">name :String</text>
+</g>
+<!-- Enemy -->
+<g id="node2" class="node">
+<title>Enemy</title>
+<polygon fill="none" stroke="black" points="45,-249 45,-271 127,-271 127,-249 45,-249"/>
+<text text-anchor="start" x="66.17" y="-255.4" font-family="Times,serif" font-size="14.00">Enemy</text>
+<polygon fill="none" stroke="black" points="45,-143 45,-249 127,-249 127,-143 45,-143"/>
+<text text-anchor="start" x="48" y="-233.4" font-family="Times,serif" font-size="14.00">name :String</text>
+<text text-anchor="start" x="48" y="-216.6" font-family="Times,serif" font-size="14.00">lp :int</text>
+<text text-anchor="start" x="48" y="-199.8" font-family="Times,serif" font-size="14.00">coins :int</text>
+<text text-anchor="start" x="48" y="-183" font-family="Times,serif" font-size="14.00">atk :int</text>
+<text text-anchor="start" x="48" y="-166.2" font-family="Times,serif" font-size="14.00">def :int</text>
+<text text-anchor="start" x="48" y="-149.4" font-family="Times,serif" font-size="14.00">stance :String</text>
+</g>
+<!-- Enemy&#45;&gt;Dungeon -->
+<g id="edge3" class="edge">
+<title>Enemy&#45;&gt;Dungeon</title>
+<path fill="none" stroke="black" d="M65.47,-275.37C61.62,-288.02 57.82,-300.49 54.68,-310.81"/>
+<text text-anchor="middle" x="30.57" y="-298.21" font-family="Times,serif" font-size="14.00">dungeon</text>
+<text text-anchor="middle" x="41.56" y="-279.57" font-family="Times,serif" font-size="14.00">enemy *</text>
+</g>
+<!-- Enemy&#45;&gt;Enemy -->
+<g id="edge4" class="edge">
+<title>Enemy&#45;&gt;Enemy</title>
+<path fill="none" stroke="black" d="M135.08,-183.41C145.49,-185.81 153,-193.67 153,-207 153,-220.33 145.49,-228.19 135.08,-230.59"/>
+<text text-anchor="middle" x="147.52" y="-217.99" font-family="Times,serif" font-size="14.00">prev</text>
+<text text-anchor="middle" x="147.13" y="-170.81" font-family="Times,serif" font-size="14.00">next</text>
+</g>
+<!-- Hero -->
+<g id="node3" class="node">
+<title>Hero</title>
+<polygon fill="none" stroke="black" points="8,-76.5 8,-98.5 86,-98.5 86,-76.5 8,-76.5"/>
+<text text-anchor="start" x="33.01" y="-82.9" font-family="Times,serif" font-size="14.00">Hero</text>
+<polygon fill="none" stroke="black" points="8,-3.5 8,-76.5 86,-76.5 86,-3.5 8,-3.5"/>
+<text text-anchor="start" x="11" y="-60.9" font-family="Times,serif" font-size="14.00">name :String</text>
+<text text-anchor="start" x="11" y="-44.1" font-family="Times,serif" font-size="14.00">lp :int</text>
+<text text-anchor="start" x="11" y="-27.3" font-family="Times,serif" font-size="14.00">coins :int</text>
+<text text-anchor="start" x="11" y="-10.5" font-family="Times,serif" font-size="14.00">mode :String</text>
+</g>
+<!-- Hero&#45;&gt;Dungeon -->
+<g id="edge1" class="edge">
+<title>Hero&#45;&gt;Dungeon</title>
+<path fill="none" stroke="black" d="M33.9,-103.43C31.45,-115.04 29.26,-127.38 28,-139 21.48,-199.09 18.91,-215.24 28,-275 29.84,-287.06 33.6,-300.02 37.3,-310.88"/>
+<text text-anchor="middle" x="61.41" y="-298.28" font-family="Times,serif" font-size="14.00">dungeon</text>
+<text text-anchor="middle" x="21.46" y="-107.63" font-family="Times,serif" font-size="14.00">hero</text>
+</g>
+<!-- Hero&#45;&gt;Enemy -->
+<g id="edge2" class="edge">
+<title>Hero&#45;&gt;Enemy</title>
+<path fill="none" stroke="black" d="M59.88,-103.19C62.78,-114.63 65.91,-126.94 68.96,-138.94"/>
+<text text-anchor="middle" x="43.3" y="-126.34" font-family="Times,serif" font-size="14.00">attacking</text>
+<text text-anchor="middle" x="85.54" y="-107.39" font-family="Times,serif" font-size="14.00">attacking</text>
+</g>
+</g>
+</svg>

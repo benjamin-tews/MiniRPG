@@ -1,0 +1,60 @@
+- c: 	ClassModel
+  classes: 	scenarioTest
+  defaultCollectionType: 	c1
+  defaultPropertyStyle: 	Bean
+  defaultRoleType: 	"java.util.ArrayList<%s>"
+  mainJavaDir: 	"src/test/java"
+  packageName: 	de.uniks.pmws2021.model
+  packageSrcFolder: 	"src/test/java/de/uniks/pmws2021/model"
+
+- scenarioTest: 	Clazz
+  importList: 	org.junit.Test
+  imports: 	org.junit.Test
+  methods: 	scenarioTest_mymodel
+  model: 	c
+  modified: 	false
+  name: 	ScenarioTest
+  propertyStyle: 	Bean
+
+- c1: 	CollectionType
+  implClass: 	class java.util.ArrayList
+  implTemplate: 	"java.util.ArrayList<%s>"
+  itf: 	org.fulib.classmodel.CollectionInterface.List
+  qualifiedImplName: 	java.util.ArrayList
+  simpleImplName: 	ArrayList
+
+- scenarioTest_mymodel: 	FMethod
+  annotations: 	"@Test"
+  clazz: 	scenarioTest
+  declaration: 	"@Test
+   public void mymodel()"
+  id: 	ScenarioTest_mymodel
+  methodBody: 	"      // create classes via concret objects
+      Dungeon dungeon = new Dungeon();
+      dungeon.setName(\"dungeon\");
+      Enemy ogre = new Enemy();
+      ogre.setName(\"ogre\");
+      ogre.setLp(100);
+      ogre.setCoins(30);
+      ogre.setAtk(25);
+      ogre.setDef(40);
+      // another option to add attributes
+      Enemy monster = new Enemy();
+      monster.setName(\"monster\");
+      Hero krasserDude = new Hero();
+      krasserDude.setName(\"KrasserDude\");
+      krasserDude.setLp(100);
+      krasserDude.setCoins(30);
+      krasserDude.setMode(\"hard\");
+      dungeon.withEnemy(ogre, monster);
+      dungeon.setHero(krasserDude);
+      monster.setAttacking(krasserDude);
+      monster.setNext(ogre);
+"
+  modified: 	false
+  modifiers: 	public
+  name: 	mymodel
+  paramsString: 	""
+  returnType: 	void
+  signature: 	"class/ScenarioTest/method/mymodel()"
+

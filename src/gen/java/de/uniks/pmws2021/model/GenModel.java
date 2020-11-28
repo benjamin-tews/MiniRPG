@@ -8,5 +8,6 @@ public class GenModel implements ClassModelDecorator
 	@Override
 	public void decorate(ClassModelManager mm)
 	{
+
 	}
 }
