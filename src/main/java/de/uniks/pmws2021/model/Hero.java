@@ -2,6 +2,10 @@ package de.uniks.pmws2021.model;
 import java.util.Objects;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Collection;
 
 public class Hero
 {
@@ -11,6 +15,7 @@ public class Hero
    public static final String PROPERTY_MODE = "mode";
    public static final String PROPERTY_DUNGEON = "dungeon";
    public static final String PROPERTY_ATTACKING = "attacking";
+   public static final String PROPERTY_STATS = "stats";
    private String name;
    private int lp;
    private int coins;
@@ -18,6 +23,7 @@ public class Hero
    private Dungeon dungeon;
    private Enemy attacking;
    protected PropertyChangeSupport listeners;
+   private List<HeroStat> stats;
 
    public String getName()
    {
@@ -145,6 +151,72 @@ public class Hero
       return this;
    }
 
+   public List<HeroStat> getStats()
+   {
+      return this.stats != null ? Collections.unmodifiableList(this.stats) : Collections.emptyList();
+   }
+
+   public Hero withStats(HeroStat value)
+   {
+      if (this.stats == null)
+      {
+         this.stats = new ArrayList<>();
+      }
+      if (!this.stats.contains(value))
+      {
+         this.stats.add(value);
+         value.setHero(this);
+         this.firePropertyChange(PROPERTY_STATS, null, value);
+      }
+      return this;
+   }
+
+   public Hero withStats(HeroStat... value)
+   {
+      for (final HeroStat item : value)
+      {
+         this.withStats(item);
+      }
+      return this;
+   }
+
+   public Hero withStats(Collection<? extends HeroStat> value)
+   {
+      for (final HeroStat item : value)
+      {
+         this.withStats(item);
+      }
+      return this;
+   }
+
+   public Hero withoutStats(HeroStat value)
+   {
+      if (this.stats != null && this.stats.remove(value))
+      {
+         value.setHero(null);
+         this.firePropertyChange(PROPERTY_STATS, value, null);
+      }
+      return this;
+   }
+
+   public Hero withoutStats(HeroStat... value)
+   {
+      for (final HeroStat item : value)
+      {
+         this.withoutStats(item);
+      }
+      return this;
+   }
+
+   public Hero withoutStats(Collection<? extends HeroStat> value)
+   {
+      for (final HeroStat item : value)
+      {
+         this.withoutStats(item);
+      }
+      return this;
+   }
+
    public boolean firePropertyChange(String propertyName, Object oldValue, Object newValue)
    {
       if (this.listeners != null)
@@ -206,5 +278,6 @@ public class Hero
    {
       this.setDungeon(null);
       this.setAttacking(null);
+      this.withoutStats(new ArrayList<>(this.getStats()));
    }
 }

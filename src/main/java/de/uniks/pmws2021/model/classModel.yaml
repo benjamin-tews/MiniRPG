@@ -1,5 +1,5 @@
 - c: 	ClassModel
-  classes: 	dungeon 	enemy 	hero
+  classes: 	dungeon 	enemy 	hero 	heroStat 	attackStat 	defenseStat
   defaultCollectionType: 	c1
   defaultPropertyStyle: 	Bean
   defaultRoleType: 	"java.util.ArrayList<%s>"
@@ -29,7 +29,30 @@
   modified: 	false
   name: 	Hero
   propertyStyle: 	Bean
-  roles: 	hero_dungeon 	hero_attacking
+  roles: 	hero_dungeon 	hero_attacking 	hero_stats
+
+- heroStat: 	Clazz
+  attributes: 	heroStat_level 	heroStat_value 	heroStat_cost
+  model: 	c
+  modified: 	false
+  name: 	HeroStat
+  propertyStyle: 	Bean
+  roles: 	heroStat_hero
+  subClasses: 	attackStat 	defenseStat
+
+- attackStat: 	Clazz
+  model: 	c
+  modified: 	false
+  name: 	AttackStat
+  propertyStyle: 	Bean
+  superClass: 	heroStat
+
+- defenseStat: 	Clazz
+  model: 	c
+  modified: 	false
+  name: 	DefenseStat
+  propertyStyle: 	Bean
+  superClass: 	heroStat
 
 - c1: 	CollectionType
   implClass: 	class java.util.ArrayList
@@ -217,5 +240,54 @@
   modified: 	false
   name: 	attacking
   other: 	enemy_attacking
+  propertyStyle: 	Bean
+
+- hero_stats: 	AssocRole
+  aggregation: 	false
+  cardinality: 	2
+  clazz: 	hero
+  collectionType: 	c1
+  id: 	Hero_stats
+  modified: 	false
+  name: 	stats
+  other: 	heroStat_hero
+  propertyStyle: 	Bean
+  roleType: 	"java.util.ArrayList<%s>"
+
+- heroStat_level: 	Attribute
+  clazz: 	heroStat
+  id: 	HeroStat_level
+  modified: 	false
+  name: 	level
+  propertyStyle: 	Bean
+  type: 	int
+  typeSignature: 	int
+
+- heroStat_value: 	Attribute
+  clazz: 	heroStat
+  id: 	HeroStat_value
+  modified: 	false
+  name: 	value
+  propertyStyle: 	Bean
+  type: 	int
+  typeSignature: 	int
+
+- heroStat_cost: 	Attribute
+  clazz: 	heroStat
+  id: 	HeroStat_cost
+  modified: 	false
+  name: 	cost
+  propertyStyle: 	Bean
+  type: 	int
+  typeSignature: 	int
+
+- heroStat_hero: 	AssocRole
+  aggregation: 	false
+  cardinality: 	1
+  clazz: 	heroStat
+  id: 	HeroStat_hero
+  modified: 	false
+  name: 	hero
+  other: 	hero_stats
   propertyStyle: 	Bean
 
