@@ -4,7 +4,7 @@ import de.uniks.pmws2021.model.*;
 
 public class TemporaryGameController {
 
-    public Dungeon enterDungeon(Hero hero){
+    public Dungeon enterDungeon(Hero hero) {
 
         Dungeon dungeon = new Dungeon();
         Enemy enemy1 = new Enemy();
@@ -25,4 +25,18 @@ public class TemporaryGameController {
         return dungeon;
 
     }
+
+    //methods for exercise 5 task 2
+    public void heroStatUpdate(HeroStat stat) {
+
+    }
+
+    public void heroEngagesFight(String heroStance, Hero hero) {
+
+    }
+
+    public void evaluateFight(Enemy enemy, Hero hero) {
+
+    }
+
 }
