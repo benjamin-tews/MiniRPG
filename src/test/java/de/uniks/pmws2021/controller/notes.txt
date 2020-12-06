@@ -1,0 +1,27 @@
+aufgabe 4:
+//testHeroStatUpdateNullHero
+try and catch bei upgrade to less coins
+        try {
+            gc.heroStatUpdate(defenceStats);
+            Assert.fail();
+        } catch (RuntimeException e) {
+            //to less coins
+        }
+
+
+
+//testheroupdatenullstat
+//assertions ergänzen
+Assert.assertEquals(null, attackStats.getHero());
+
+
+
+//testHeroStatUpdateNegativePrice
+value in line 127 ist zu hoch -.-
+
+//testHeroEngages FightUnknownStance
+catch RuntimeException verbessern nach: //Invalid Stance combination
+
+
+//public void evaluateFightEnemySurvives()
+hero lifepoints to high so enemy cant win
