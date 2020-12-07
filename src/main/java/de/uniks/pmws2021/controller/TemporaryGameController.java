@@ -162,7 +162,7 @@ public class TemporaryGameController {
             hero.setLp(MAX_LIFE);
             //set next enemy if exists
             if (enemy.getNext() != null) {
-                //enemy fokuses on hero
+                //enemy focuses on hero
                 hero.setAttacking(enemy.getNext());
                 Enemy tmpEnemy = new Enemy();
                 tmpEnemy = enemy.getNext();
