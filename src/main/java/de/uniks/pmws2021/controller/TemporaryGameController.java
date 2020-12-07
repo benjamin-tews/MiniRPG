@@ -8,6 +8,8 @@ import java.util.Random;
 public class TemporaryGameController {
 
     final static int MAX_LIFE = 100;
+    final static int UPGRADE_COST = 50;
+    final static double UPGRADE_FACTOR = 1.1;
 
     public Dungeon enterDungeon(Hero hero) {
 
@@ -33,9 +35,6 @@ public class TemporaryGameController {
 
     //methods for exercise 5 task 2
     public void heroStatUpdate(HeroStat stat) {
-
-        final int UPGRADE_COST = 50;
-        final double UPGRADE_FACTOR = 1.1;
 
         if (stat.getHero() == null) {
             throw new NullPointerException("empty hero - doh!");
