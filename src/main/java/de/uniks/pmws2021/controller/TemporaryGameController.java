@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class TemporaryGameController {
 
+    final static int MAX_LIFE = 100;
 
     public Dungeon enterDungeon(Hero hero) {
 
@@ -59,11 +60,23 @@ public class TemporaryGameController {
         String attack = Stances.stances[0];
         String defend = Stances.stances[1];
 
+        //hero is null
+        if (hero == null) {
+            throw new NullPointerException("empty hero - doh!");
+        }
+
+        //heroStance is neither "defend" nor "attack"
+        if ( ! heroStance.equals(defend) && ! heroStance.equals(attack)) {
+            throw new RuntimeException("Invalid Stance combination");
+        }
+
         //both attack
         if (heroStance == attack && hero.getAttacking().getStance() == attack) {
             //set heros life
-            if ( (hero.getLp() - hero.getAttacking().getAtk() ) < 0) {
+            if ((hero.getLp() - hero.getAttacking().getAtk()) < 0) {
                 hero.setLp(0);
+                //remove hero from dungeon
+                //hero.setDungeon(null);
             } else {
                 hero.setLp(hero.getLp() - hero.getAttacking().getAtk());
             }
@@ -73,19 +86,23 @@ public class TemporaryGameController {
             //sets the enemy's lifepoints
             if ((hero.getAttacking().getLp() - attackingStat.getValue()) < 0) {
                 hero.getAttacking().setLp(0);
+                //remove enemy from dungeon
+                //hero.getDungeon().withoutEnemy(hero.getAttacking());
+                //hero.getAttacking().setDungeon(null);
             } else {
                 hero.getAttacking().setLp(hero.getAttacking().getLp() - attackingStat.getValue());
             }
         }
         //hero attacks and enemy defends
         else if (heroStance == attack && hero.getAttacking().getStance() == defend) {
-
             //take first object of AttackStat and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof AttackStat).findFirst();
             HeroStat attackingStat = firstHeroStat.get();
             //sets the enemy's lifepoints
             if ((hero.getAttacking().getLp() - (attackingStat.getValue() - hero.getAttacking().getDef())) < 0) {
                 hero.getAttacking().setLp(0);
+                //remove enemy from dungeon
+                //hero.getAttacking().setDungeon(null);
             } else {
                 hero.getAttacking().setLp(hero.getAttacking().getLp() - (attackingStat.getValue() - hero.getAttacking().getDef()));
             }
@@ -96,8 +113,11 @@ public class TemporaryGameController {
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof DefenseStat).findFirst();
             HeroStat defenceStat = firstHeroStat.get();
 
+            //set heros lp
             if ((hero.getAttacking().getAtk() - defenceStat.getValue()) < 0) {
                 hero.setLp(0);
+                //remove hero from dungeon
+                //hero.setDungeon(null);
             } else {
                 hero.setLp(hero.getLp() - (hero.getAttacking().getAtk() - defenceStat.getValue()));
             }
@@ -105,37 +125,54 @@ public class TemporaryGameController {
         //both defend
         else if (heroStance == defend && hero.getAttacking().getStance() == defend) {
             //take first object of DefenseStats and create local object
+            //set hero lp
             hero.setLp(hero.getLp());
+            //set enemy lp
             hero.getAttacking().setLp(hero.getAttacking().getLp());
-        } else {
-            throw new RuntimeException("Invalid Stance combination");
         }
 
     }
 
     public void evaluateFight(Enemy enemy, Hero hero) {
 
-        String attack = Stances.stances[0];
-        String defend = Stances.stances[1];
+        if (hero == null) {
+            throw new NullPointerException("empty hero - doh!");
+        }
+
+        if (enemy == null) {
+            throw new NullPointerException("empty enemy - doh!");
+        }
 
         //create random Stance of stances array ... 0 or 1
         Random random = new Random();
         String rndStance = Stances.stances[random.nextInt(Stances.stances.length)];
 
+        //while both are alive ...
         while (enemy.getLp() > 0 && hero.getLp() > 0) {
-            //both are alive
-            //random stance - make stance static
+            //set enemy random stance "attack" or "defend"
             enemy.setStance(rndStance);
-            heroEngagesFight(attack, hero);
+            //... call method heroEngagesFight(heroStance, hero)
+            heroEngagesFight("attack", hero);
         }
+
+        //if enemy died
         if (enemy.getLp() == 0) {
-            //enemy died
             hero.setCoins(hero.getCoins() + enemy.getCoins());
             //Static later
-            hero.setLp(100);
+            hero.setLp(MAX_LIFE);
             //set next enemy if exists
-            if (hero.getAttacking().getNext() != null) {
+            if (enemy.getNext() != null) {
+                //enemy fokuses on hero
                 hero.setAttacking(enemy.getNext());
+                Enemy tmpEnemy = new Enemy();
+                tmpEnemy = enemy.getNext();
+                enemy.setNext(null);
+                hero.getDungeon().withoutEnemy(enemy);
+                //call method again
+                evaluateFight(tmpEnemy, hero);
+            } else {
+                hero.setAttacking(null);
+                hero.getDungeon().withoutEnemy(enemy);
             }
         } else {
             //hero died

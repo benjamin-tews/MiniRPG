@@ -22,6 +22,31 @@ value in line 127 ist zu hoch -.-
 //testHeroEngages FightUnknownStance
 catch RuntimeException verbessern nach: //Invalid Stance combination
 
+//evaluateFightEnemyDies
+-forgot dungeon object
 
 //public void evaluateFightEnemySurvives()
 hero lifepoints to high so enemy cant win
+
+//public void evaluateFightHeroNormalModeHeal()
+forgot enemy.setCoins
+
+//public void evaluateFightHeroHardModeHeal()
+- wrong stances: "defence" und "attacks"
+
+//public void evaluateFightHeroHardModeHeal()
+- test Assert.assertEquals(null, dungeon.getEnemy()) wont work properly:
+expected:<null> but was:<[]>
+
+- forgot enemy.setCoins()
+-          Assert.assertTrue(myHero.getLp() == 100 && myEnemy.getLp() == 0 && myHero.getAttacking() == null && myHero.getCoins() > 100);
+              Assert.assertEquals(100, myHero.getLp());
+              Assert.assertEquals(160, myHero.getCoins());
+              Assert.assertEquals(0, myEnemy.getLp());
+              Assert.assertEquals(0, myEnemy1.getLp());
+              Assert.assertEquals(0, myEnemy2.getLp());
+              Assert.assertNull(myHero.getAttacking());
+              Assert.assertNull(myEnemy.getNext());
+
+//overall
+- working with assertEquals much more better than assertTrue cause of explicit values during debugging
