@@ -65,47 +65,48 @@ public class TemporaryGameController {
         }
 
         //heroStance is neither "defend" nor "attack"
-        if ( ! heroStance.equals(defend) && ! heroStance.equals(attack)) {
+        /* wrong AND implementation - need to check for both statements */
+        if (! (heroStance.equals(defend) | heroStance.equals(attack)) ) {
             throw new RuntimeException("Invalid Stance combination");
         }
 
         //both attack
         if (heroStance == attack && hero.getAttacking().getStance() == attack) {
+
             //set heros life
-            if ((hero.getLp() - hero.getAttacking().getAtk()) < 0) {
+            if ((hero.getLp() - hero.getAttacking().getAtk()) <= 0) {
                 hero.setLp(0);
-                //remove hero from dungeon
-                //hero.setDungeon(null);
             } else {
                 hero.setLp(hero.getLp() - hero.getAttacking().getAtk());
             }
+
             //take first object of AttackStat and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof AttackStat).findFirst();
             HeroStat attackingStat = firstHeroStat.get();
+
             //sets the enemy's lifepoints
-            if ((hero.getAttacking().getLp() - attackingStat.getValue()) < 0) {
+            if ((hero.getAttacking().getLp() - attackingStat.getValue()) <= 0) {
                 hero.getAttacking().setLp(0);
-                //remove enemy from dungeon
-                //hero.getDungeon().withoutEnemy(hero.getAttacking());
-                //hero.getAttacking().setDungeon(null);
             } else {
                 hero.getAttacking().setLp(hero.getAttacking().getLp() - attackingStat.getValue());
             }
         }
+
         //hero attacks and enemy defends
         else if (heroStance == attack && hero.getAttacking().getStance() == defend) {
             //take first object of AttackStat and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof AttackStat).findFirst();
             HeroStat attackingStat = firstHeroStat.get();
             //sets the enemy's lifepoints
-            if ((hero.getAttacking().getLp() - (attackingStat.getValue() - hero.getAttacking().getDef())) < 0) {
+            /* implementation error - fixed this if statement */
+
+            if ((hero.getAttacking().getLp() - attackingStat.getValue() + hero.getAttacking().getDef()) <= 0) {
                 hero.getAttacking().setLp(0);
-                //remove enemy from dungeon
-                //hero.getAttacking().setDungeon(null);
             } else {
-                hero.getAttacking().setLp(hero.getAttacking().getLp() - (attackingStat.getValue() - hero.getAttacking().getDef()));
+                hero.getAttacking().setLp(hero.getAttacking().getLp() - attackingStat.getValue() + hero.getAttacking().getDef());
             }
         }
+
         //hero defends and enemy attacks
         else if (heroStance == defend && hero.getAttacking().getStance() == attack) {
             //take first object of DefenseStats and create local object
@@ -113,14 +114,16 @@ public class TemporaryGameController {
             HeroStat defenceStat = firstHeroStat.get();
 
             //set heros lp
-            if ((hero.getAttacking().getAtk() - defenceStat.getValue()) < 0) {
+            /* implementation error: wrong lp calculation -> fixed it */
+            if ((hero.getLp() - hero.getAttacking().getAtk() + defenceStat.getValue()) <= 0) {
                 hero.setLp(0);
                 //remove hero from dungeon
                 //hero.setDungeon(null);
             } else {
-                hero.setLp(hero.getLp() - (hero.getAttacking().getAtk() - defenceStat.getValue()));
+                hero.setLp(hero.getLp() - hero.getAttacking().getAtk() + defenceStat.getValue());
             }
         }
+
         //both defend
         else if (heroStance == defend && hero.getAttacking().getStance() == defend) {
             //take first object of DefenseStats and create local object
@@ -134,6 +137,7 @@ public class TemporaryGameController {
 
     public void evaluateFight(Enemy enemy, Hero hero) {
 
+        //Exceptions to throw
         if (hero == null) {
             throw new NullPointerException("empty hero - doh!");
         }
@@ -167,7 +171,7 @@ public class TemporaryGameController {
                 tmpEnemy = enemy.getNext();
                 enemy.setNext(null);
                 hero.getDungeon().withoutEnemy(enemy);
-                //call method again
+                //recursive call method
                 evaluateFight(tmpEnemy, hero);
             } else {
                 hero.setAttacking(null);

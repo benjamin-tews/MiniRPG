@@ -17,7 +17,8 @@ public class HeroStatUpdateTest {
         //create stats
         HeroStat attackStats = new AttackStat();
         HeroStat defenceStats = new DefenseStat();
-        attackStats.setLevel(1).setValue(10).setCost(5);
+        /* testing implementation error: fixed value (5 to 10) cause of scaling factor in implementation */
+        attackStats.setLevel(1).setValue(10).setCost(10);
         defenceStats.setLevel(2).setValue(20).setCost(10);
 
         //create Hero with stats and coins and so ...
@@ -31,7 +32,7 @@ public class HeroStatUpdateTest {
         //level number increased (and so stats, cost), number of coins decreased
         Assert.assertEquals(2, attackStats.getLevel());
         Assert.assertEquals(200, myHero.getCoins());
-        Assert.assertTrue(attackStats.getCost() > 5 && attackStats.getValue() > 10);
+        Assert.assertTrue(attackStats.getCost() > 10 && attackStats.getValue() > 10);
     }
 
     @Test
@@ -51,7 +52,12 @@ public class HeroStatUpdateTest {
         myHero.withStats(attackStats, defenceStats);
 
         //call update method
-        gc.heroStatUpdate(defenceStats);
+        /* need try catch her cause to less coins in wallets - implementation method throws here a runtime exception */
+        try {
+            gc.heroStatUpdate(defenceStats);
+        } catch (RuntimeException e) {
+            // to less coins in wallet
+        }
 
         //values should be unchanged: no level upgrade, same amount of coins in it's wallet
         Assert.assertEquals(2, defenceStats.getLevel());
@@ -82,6 +88,11 @@ public class HeroStatUpdateTest {
         } catch (NullPointerException e) {
             //catch Nullpointer
         }
+
+        /* test implementation error: forget assertions --> added some assertions now */
+        Assert.assertEquals(2, defenceStats.getLevel());
+        Assert.assertEquals(1, attackStats.getLevel());
+        Assert.assertEquals(100, myHero.getCoins());
 
     }
 
@@ -124,7 +135,8 @@ public class HeroStatUpdateTest {
 
         //create Hero with stats and coins and so ...
         Hero myHero = new Hero();
-        myHero.setCoins(100);
+        /* decrease amount of coins */
+        myHero.setCoins(0);
         myHero.withStats(attackStats, defenceStats);
 
         //call try-catch update method with exception of negative amount of coins at the end
@@ -134,6 +146,9 @@ public class HeroStatUpdateTest {
         } catch (RuntimeException e) {
             //catch Runtime Exception
         }
+
+        /* test implementation error: forget assertions --> added some assertions now */
+        Assert.assertEquals(0, myHero.getCoins());
 
     }
 
