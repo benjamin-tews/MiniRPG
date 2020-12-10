@@ -1,11 +1,9 @@
 package de.uniks.pmws2021.controller;
 
 import de.uniks.pmws2021.model.*;
-import org.fulib.FulibTools;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
 
 public class HeroStatUpdateTest {
 
