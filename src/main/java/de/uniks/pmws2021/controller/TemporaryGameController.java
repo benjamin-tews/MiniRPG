@@ -66,7 +66,7 @@ public class TemporaryGameController {
 
         //heroStance is neither "defend" nor "attack"
         /* wrong AND implementation - need to check for both statements */
-        if (! (heroStance.equals(defend) | heroStance.equals(attack)) ) {
+        if (!(heroStance.equals(defend) | heroStance.equals(attack))) {
             throw new RuntimeException("Invalid Stance combination");
         }
 
@@ -100,10 +100,13 @@ public class TemporaryGameController {
             //sets the enemy's lifepoints
             /* implementation error - fixed this if statement */
 
-            if ((hero.getAttacking().getLp() - attackingStat.getValue() + hero.getAttacking().getDef()) <= 0) {
+            //calculate incomming damage
+            int damage = ( ((attackingStat.getValue() - hero.getAttacking().getDef()) > 0) ? (attackingStat.getValue() - hero.getAttacking().getDef()) : 0 );
+
+            if ((hero.getAttacking().getLp() - (damage)) <= 0) {
                 hero.getAttacking().setLp(0);
             } else {
-                hero.getAttacking().setLp(hero.getAttacking().getLp() - attackingStat.getValue() + hero.getAttacking().getDef());
+                hero.getAttacking().setLp(hero.getAttacking().getLp() - damage);
             }
         }
 
@@ -115,12 +118,15 @@ public class TemporaryGameController {
 
             //set heros lp
             /* implementation error: wrong lp calculation -> fixed it */
-            if ((hero.getLp() - hero.getAttacking().getAtk() + defenceStat.getValue()) <= 0) {
+
+            int damage = ( ((hero.getAttacking().getAtk() - defenceStat.getValue()) > 0) ? (hero.getAttacking().getAtk() - defenceStat.getValue()) : 0 );
+
+            if ((hero.getLp() - damage) <= 0) {
                 hero.setLp(0);
                 //remove hero from dungeon
                 //hero.setDungeon(null);
             } else {
-                hero.setLp(hero.getLp() - hero.getAttacking().getAtk() + defenceStat.getValue());
+                hero.setLp(hero.getLp() - damage);
             }
         }
 
@@ -137,6 +143,10 @@ public class TemporaryGameController {
 
     public void evaluateFight(Enemy enemy, Hero hero) {
 
+        //create random Stance of stances array ... 0 or 1
+        Random random = new Random();
+        String rndStance = Stances.stances[random.nextInt(Stances.stances.length)];
+
         //Exceptions to throw
         if (hero == null) {
             throw new NullPointerException("empty hero - doh!");
@@ -146,12 +156,51 @@ public class TemporaryGameController {
             throw new NullPointerException("empty enemy - doh!");
         }
 
-        //create random Stance of stances array ... 0 or 1
-        Random random = new Random();
-        String rndStance = Stances.stances[random.nextInt(Stances.stances.length)];
+        /* whole new implementation was necessary cause of wrong task assumptions */
+        //initial fight round
+        heroEngagesFight("attack", hero);
+
+        //if enemy died in fight and hero still lives ...
+        if ((enemy.getLp() == 0) & (hero.getLp() > 0)) {
+            //hero gets its coins
+            hero.setCoins(hero.getCoins() + enemy.getCoins());
+        } else {
+            //enemy still alive: set enemy random stance
+            enemy.setStance(rndStance);
+        }
+
+        //if died enemy got next enemy and hero s still alive
+        while ((enemy.getLp() == 0) & (enemy.getNext() != null) & (hero.getLp() > 0)) {
+            Enemy nextEnemy;
+            nextEnemy = enemy.getNext();
+            //remove dead enemy and its links
+            enemy.setNext(null);
+            hero.getDungeon().withoutEnemy(enemy);
+            //set enemy to next enemy
+            enemy = nextEnemy;
+            hero.setAttacking(enemy);
+            //fight against next enemy
+            heroEngagesFight("attack", hero);
+            if (enemy.getLp() == 0) {
+                //hero gets its coins
+                hero.setCoins(hero.getCoins() + enemy.getCoins());
+            } else {
+                //enemy still alive: set enemy random stance
+                enemy.setStance(rndStance);
+            }
+        }
+
+        //at the end of round
+        hero.setAttacking(null);
+        hero.getDungeon().withoutEnemy(enemy);
+        hero.setLp(MAX_LIFE);
+
+
+        /*      OLD IMPLEMENTATION - FIGHT UNTIL ONE IS DEAD
 
         //while both are alive ...
-        while (enemy.getLp() > 0 && hero.getLp() > 0) {
+        /* to get rid of memory errors if both defend we could implement a ttl counter */
+        /*while (enemy.getLp() > 0 && hero.getLp() > 0) {
             //set enemy random stance "attack" or "defend"
             enemy.setStance(rndStance);
             //... call method heroEngagesFight(heroStance, hero)
@@ -172,7 +221,7 @@ public class TemporaryGameController {
                 enemy.setNext(null);
                 hero.getDungeon().withoutEnemy(enemy);
                 //recursive call method
-                evaluateFight(tmpEnemy, hero);
+                //evaluateFight(tmpEnemy, hero);
             } else {
                 hero.setAttacking(null);
                 hero.getDungeon().withoutEnemy(enemy);
@@ -181,6 +230,8 @@ public class TemporaryGameController {
             //hero died
             //return to menu
         }
+       */
+
     }
 
 }
