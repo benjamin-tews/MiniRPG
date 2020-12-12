@@ -25,7 +25,7 @@
 <text text-anchor="start" x="92.5" y="-343.4" font-family="Times,serif" font-size="14.00">stance :String</text>
 </g>
 <!-- Enemy&#45;&gt;Dungeon -->
-<g id="edge5" class="edge">
+<g id="edge2" class="edge">
 <title>Enemy&#45;&gt;Dungeon</title>
 <path fill="none" stroke="black" d="M109.97,-469.37C106.12,-482.02 102.32,-494.49 99.18,-504.81"/>
 <text text-anchor="middle" x="75.07" y="-492.21" font-family="Times,serif" font-size="14.00">dungeon</text>
@@ -50,14 +50,14 @@
 <text text-anchor="start" x="55.5" y="-204.5" font-family="Times,serif" font-size="14.00">mode :String</text>
 </g>
 <!-- Hero&#45;&gt;Dungeon -->
-<g id="edge1" class="edge">
+<g id="edge5" class="edge">
 <title>Hero&#45;&gt;Dungeon</title>
 <path fill="none" stroke="black" d="M78.4,-297.43C75.95,-309.04 73.76,-321.38 72.5,-333 65.98,-393.09 63.41,-409.24 72.5,-469 74.34,-481.06 78.1,-494.02 81.8,-504.88"/>
 <text text-anchor="middle" x="105.91" y="-492.28" font-family="Times,serif" font-size="14.00">dungeon</text>
 <text text-anchor="middle" x="65.96" y="-301.63" font-family="Times,serif" font-size="14.00">hero</text>
 </g>
 <!-- Hero&#45;&gt;Enemy -->
-<g id="edge2" class="edge">
+<g id="edge4" class="edge">
 <title>Hero&#45;&gt;Enemy</title>
 <path fill="none" stroke="black" d="M104.38,-297.19C107.28,-308.63 110.41,-320.94 113.46,-332.94"/>
 <text text-anchor="middle" x="87.8" y="-320.34" font-family="Times,serif" font-size="14.00">attacking</text>
@@ -74,7 +74,7 @@
 <text text-anchor="start" x="65.5" y="-82.8" font-family="Times,serif" font-size="14.00">cost :int</text>
 </g>
 <!-- HeroStat&#45;&gt;Hero -->
-<g id="edge4" class="edge">
+<g id="edge1" class="edge">
 <title>HeroStat&#45;&gt;Hero</title>
 <path fill="none" stroke="black" d="M91.5,-158.08C91.5,-169.49 91.5,-181.98 91.5,-193.82"/>
 <text text-anchor="middle" x="79.06" y="-181.22" font-family="Times,serif" font-size="14.00">hero</text>

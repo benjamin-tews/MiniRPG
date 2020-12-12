@@ -40,9 +40,10 @@ dependencies {
 	testImplementation group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.30'
 
 	testImplementation 'org.testfx:testfx-junit:4.0.16-alpha'
+
 }
 
-mainClassName = 'de.uniks.pmws2021.Launcher'
+	mainClassName = 'de.uniks.pmws2021.Launcher'
 
 generateScenarioSource {
 	classDiagramSVG = true

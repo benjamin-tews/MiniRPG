@@ -12,7 +12,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER">
+      <HBox id="MiniRPG - Ingame" alignment="CENTER">
          <children>
             <Label text="The Fire Pits">
                <font>
@@ -52,20 +52,20 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="50.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Button">
+                              <Button mnemonicParsing="false">
                                  <graphic>
                                     <ImageView fitHeight="40.0" fitWidth="40.0">
                                        <image>
-                                          <Image url="@../../Downloads/attack.png" />
+                                          <Image url="@img/attack.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false" text="Button">
+                              <Button mnemonicParsing="false">
                                  <graphic>
                                     <ImageView fitHeight="40.0" fitWidth="40.0">
                                        <image>
-                                          <Image url="@../../Downloads/defend.png" />
+                                          <Image url="@img/defend.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -77,9 +77,9 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="190.0" fitWidth="190.0">
+                              <ImageView fitHeight="180.0" fitWidth="180.0">
                                  <image>
-                                    <Image url="@mockups/dcgy8i3-e6dac283-04a7-40e5-a333-cc645e172df7.png" />
+                                    <Image url="@img/hero.png" />
                                  </image>
                               </ImageView>
                               <Label alignment="CENTER" text="Sir DanceALot">
@@ -93,9 +93,9 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <ImageView fitHeight="190.0" fitWidth="190.0">
+                                    <ImageView fitHeight="180.0" fitWidth="180.0">
                                        <image>
-                                          <Image url="@mockups/dcp1vs1-bf73a1b4-61e5-4d79-b00a-5c1c415e8d05.png" />
+                                          <Image url="@img/shini.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -104,7 +104,7 @@
                                  <children>
                                     <ImageView fitHeight="30.0" fitWidth="30.0">
                                        <image>
-                                          <Image url="@../../Downloads/defend.png" />
+                                          <Image url="@img/defend.png" />
                                        </image>
                                     </ImageView>
                                     <Label alignment="CENTER" text="Shinigami">
@@ -116,23 +116,6 @@
                               </HBox>
                            </children>
                         </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="579.0">
-                     <children>
-                        <ImageView fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../../Downloads/coins.png" />
-                           </image>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </ImageView>
-                        <Label text="50">
-                           <HBox.margin>
-                              <Insets left="12.0" />
-                           </HBox.margin>
-                        </Label>
                      </children>
                   </HBox>
                </children></VBox>
@@ -148,7 +131,7 @@
                   </Text>
                   <ImageView fitHeight="40.0" fitWidth="50.0">
                      <image>
-                        <Image url="@../../Downloads/arrow.png" />
+                        <Image url="@img/arrow.png" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="12.0" />
@@ -177,13 +160,13 @@
       </HBox>
       <HBox>
          <children>
-            <VBox alignment="CENTER" prefHeight="171.0" prefWidth="577.0">
+            <VBox alignment="CENTER_RIGHT" prefHeight="161.0" prefWidth="454.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="49.0" prefWidth="554.0" spacing="12.0">
+                  <HBox alignment="CENTER_RIGHT" spacing="12.0">
                      <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0">
                            <image>
-                              <Image url="@../../Downloads/attack.png" />
+                              <Image url="@img/attack.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -214,7 +197,7 @@
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0">
                                  <image>
-                                    <Image url="@../../Downloads/coin.png" />
+                                    <Image url="@img/coin.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -230,11 +213,12 @@
                         <Insets />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefWidth="500.0" spacing="12.0">
+                  <HBox prefHeight="16.0" prefWidth="446.0" />
+                  <HBox alignment="CENTER_RIGHT" spacing="12.0">
                      <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0">
                            <image>
-                              <Image url="@../../Downloads/defend.png" />
+                              <Image url="@img/defend.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -265,7 +249,7 @@
                            <graphic>
                               <ImageView fitHeight="15.0" fitWidth="15.0">
                                  <image>
-                                    <Image url="@../../Downloads/coin.png" />
+                                    <Image url="@img/coin.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -277,10 +261,31 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="171.0" prefWidth="266.0">
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="100.0" text="RESET" />
-                  <Button alignment="CENTER" mnemonicParsing="false" prefWidth="100.0" text="EXIT" textAlignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="144.0">
+                     <children>
+                        <ImageView fitHeight="25.0" fitWidth="25.0">
+                           <image>
+                              <Image url="@img/coins.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label text="50">
+                           <HBox.margin>
+                              <Insets left="12.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="161.0" prefWidth="170.0">
+               <children>
+                  <Button mnemonicParsing="false" prefWidth="100.0" text="RESET" />
+                  <Button id="ExitButton" alignment="CENTER" mnemonicParsing="false" prefWidth="100.0" text="EXIT" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="24.0" />
                      </VBox.margin>
