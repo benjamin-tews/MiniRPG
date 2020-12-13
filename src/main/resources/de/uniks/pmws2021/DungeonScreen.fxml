@@ -82,7 +82,7 @@
                                     <Image url="@img/hero.png" />
                                  </image>
                               </ImageView>
-                              <Label alignment="CENTER" text="Sir DanceALot">
+                              <Label id="HeroNameLabel" alignment="CENTER" text="Sir DanceALot">
                                  <font>
                                     <Font name="Comic Sans MS Bold" size="18.0" />
                                  </font>
@@ -284,7 +284,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="161.0" prefWidth="170.0">
                <children>
-                  <Button mnemonicParsing="false" prefWidth="100.0" text="RESET" />
+                  <Button id="ResetButton" mnemonicParsing="false" prefWidth="100.0" text="RESET" />
                   <Button id="ExitButton" alignment="CENTER" mnemonicParsing="false" prefWidth="100.0" text="EXIT" textAlignment="CENTER">
                      <VBox.margin>
                         <Insets top="24.0" />

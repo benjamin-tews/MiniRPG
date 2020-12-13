@@ -101,7 +101,7 @@
                                           </VBox>
                                           <VBox alignment="TOP_CENTER" prefHeight="98.0" prefWidth="259.0">
                                              <children>
-                                                <TextField alignment="CENTER" promptText="Enter Hero Name">
+                                                <TextField id="CreateHeroField" alignment="CENTER" promptText="Enter Hero Name">
                                                    <VBox.margin>
                                                       <Insets left="12.0" top="12.0" />
                                                    </VBox.margin></TextField>
