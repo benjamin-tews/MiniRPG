@@ -48,7 +48,6 @@ public class StageManagerTest extends ApplicationTest {
         Button exitButton = lookup("#ExitButton").query();
         Assert.assertEquals("EXIT", exitButton.getText());
 
-        // back to DungeonScreen
         // click ExitButton and change view to Menu HeroScreen
         clickOn("#ExitButton");
         Assert.assertEquals("MiniRPG - Main Menu", stage.getTitle());
