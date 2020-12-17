@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -42,26 +43,14 @@
                                           <Insets bottom="24.0" top="24.0" />
                                        </VBox.margin>
                                     </Text>
-                                    <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="78.0" text="Hero 1">
+                                    <ListView id="listView" fx:id="listView" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
                                        <VBox.margin>
-                                          <Insets bottom="12.0" />
+                                          <Insets left="24.0" right="24.0" />
                                        </VBox.margin>
-                                    </CheckBox>
-                                    <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="78.0" text="Hero 2">
-                                       <VBox.margin>
-                                          <Insets bottom="12.0" />
-                                       </VBox.margin>
-                                    </CheckBox>
-                                    <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="78.0" text="Hero 3">
-                                       <VBox.margin>
-                                          <Insets bottom="12.0" />
-                                       </VBox.margin>
-                                    </CheckBox>
-                                    <CheckBox mnemonicParsing="false" prefHeight="17.0" prefWidth="78.0" text="Hero 4">
-                                       <VBox.margin>
-                                          <Insets bottom="12.0" />
-                                       </VBox.margin>
-                                    </CheckBox>
+                                    </ListView>
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400.0">
