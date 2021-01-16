@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox id="HeroViewContainer" alignment="CENTER" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView id="HeroView" fitHeight="180.0" fitWidth="180.0">
+         <image>
+            <Image url="@../img/hero.png" />
+         </image>
+      </ImageView>
+      <Label id="HeroNameLabel" alignment="CENTER" text="Sir DanceALot">
+         <font>
+            <Font name="Comic Sans MS Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label id="HeroLpLabel" text="80 / 100" />
+   </children>
+</VBox>

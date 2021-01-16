@@ -1,5 +1,6 @@
 package de.uniks.pmws2021.controller;
 
+import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.model.Hero;
 import javafx.application.Platform;
@@ -21,13 +22,15 @@ public class HeroScreenController {
     File myImage = new File ("C:\\Users\\Shrabbit\\UNI\\Programmierung und Modellierung 2021\\pmws2021-minirpg-benjamin-tews\\src\\main\\resources\\de\\uniks\\pmws2021\\img\\skull.png");
     private Image skull = new Image(myImage.toURI().toString());
     private Parent view;
+    private RPGEditor editor;
     private Button createStartButton;
     private Button exitButton;
     private ListView<Hero> listView;
     private ObservableList<Hero> heroObservableList;
 
-    public HeroScreenController(Parent view) {
+    public HeroScreenController(Parent view, RPGEditor editor) {
         this.view = view;
+        this.editor = editor;
     }
 
     public void init() {
@@ -43,7 +46,7 @@ public class HeroScreenController {
         listView = (ListView) view.lookup("#listView");
         heroObservableList = FXCollections.observableArrayList();
 
-        // create some dummy heros
+        // create some dummy heroes
         Hero hero1 = new Hero();
         Hero hero2 = new Hero();
         hero1.setName("Sir DanceALot").setMode("normal");

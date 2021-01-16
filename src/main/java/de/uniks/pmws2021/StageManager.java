@@ -14,6 +14,7 @@ public class StageManager extends Application {
     private static Stage stage;
     private static DungeonScreenController dungeonCtrl;
     private static HeroScreenController heroCtrl;
+    private static RPGEditor rpgEditor;
 
     public static void showHeroScreen() {
         cleanup();
@@ -23,8 +24,11 @@ public class StageManager extends Application {
             Parent root = FXMLLoader.load(StageManager.class.getResource("HeroScreen.fxml"));
             Scene scene = new Scene(root);
 
+            // editor
+            rpgEditor = new RPGEditor();
+
             // init controller
-            heroCtrl = new HeroScreenController(root);
+            heroCtrl = new HeroScreenController(root, rpgEditor);
             heroCtrl.init();
 
             // display
@@ -40,6 +44,8 @@ public class StageManager extends Application {
 
     public static void showDungeonScreen() {
         cleanup();
+
+
         // show dungeon screen
         // load view
         try {
@@ -48,7 +54,7 @@ public class StageManager extends Application {
 
             // init controller
             stage.setTitle("MiniRPG - Ingame");
-            dungeonCtrl = new DungeonScreenController(root);
+            dungeonCtrl = new DungeonScreenController(root, rpgEditor);
             dungeonCtrl.init();
 
             // display
