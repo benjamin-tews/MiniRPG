@@ -66,6 +66,11 @@ public class RPGEditor {
         return this.dungeon;
     }
 
+    // Getter for Dungeon
+    public Dungeon getDungeon() {
+        return dungeon;
+    }
+
     public void enterDungeon(Hero hero) {
         // Put in your code
         // Use the have<Entity>() Method from above instead of new <Entity>()
@@ -93,11 +98,10 @@ public class RPGEditor {
        OLD STUFF */
 
         // ToDo: implement random stance later
-        haveHero("Sir DanceALot", "normalMode");
-        haveEnemy("Goblin", "30", "5", "5", "7", "attack");
-        haveEnemy("Ogre", "60", "7", "10", "10", "defend");
-        haveEnemy("Hydra", "50", "10", "20", "8", "defend");
-        haveDungeon("The Fire Pits", haveHero(), haveEnemy());
+
+        //haveEnemy("Ogre", 60, 7, 10, 10, "defend");
+        //haveEnemy("Hydra", 50, 10, 20, 8, "defend");
+        haveDungeon("The Fire Pits", haveHero("Sir DanceALot", "normalMode"), haveEnemy("Goblin", 30, 5, 5, 7, "attack"));
 
     }
 
@@ -182,7 +186,7 @@ public class RPGEditor {
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof DefenseStat).findFirst();
             HeroStat defenceStat = firstHeroStat.get();
 
-            //set heros lp
+            //set heroes lp
             /* implementation error: wrong lp calculation -> fixed it */
 
             int damage = (((hero.getAttacking().getAtk() - defenceStat.getValue()) > 0) ? (hero.getAttacking().getAtk() - defenceStat.getValue()) : 0);

@@ -17,6 +17,7 @@ import java.io.File;
 
 
 public class HeroScreenController {
+    //ToDo: Fix Pathname
     File myImage = new File ("C:\\Users\\Shrabbit\\UNI\\Programmierung und Modellierung 2021\\pmws2021-minirpg-benjamin-tews\\src\\main\\resources\\de\\uniks\\pmws2021\\img\\skull.png");
     private Image skull = new Image(myImage.toURI().toString());
     private Parent view;
