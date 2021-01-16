@@ -43,4 +43,15 @@ public class DungeonScreenController {
         StageManager.showDungeonScreen();
     }
 
+    // lookup enemySubView
+    // create and init EnemyViewSubController
+
+    // lookup heroSubView
+    // create and init HeroViewSubController
+
+    // iterate hero stats
+    // load fxml for every stat
+    // create and init HeroStatViewSubController for each
+    // add to heroStatContainer in dungeonView
+
 }

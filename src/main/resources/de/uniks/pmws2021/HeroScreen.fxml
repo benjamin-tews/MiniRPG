@@ -257,7 +257,23 @@
                   </VBox>
                </content>
             </Tab>
-          <Tab text="Menu" />
+          <Tab text="Menu">
+               <content>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ImageView fitHeight="256.0" fitWidth="272.0">
+                           <image>
+                              <Image url="@img/rpg-game.png" />
+                           </image>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mini RPG">
+                           <font>
+                              <Font name="Comic Sans MS Bold" size="48.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+               </content></Tab>
             <Tab text="Settings" />
         </tabs>
       </TabPane>
