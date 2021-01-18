@@ -3,7 +3,6 @@ package de.uniks.pmws2021;
 import de.uniks.pmws2021.model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -45,6 +44,7 @@ public class RPGEditor {
         // create hero and heroStat with initial and given values
         Hero hero = new Hero();
         hero.setName(heroName).setMode(hardMode);
+        hero.setLp(100);
         // add hero to heroes list (This is important for saving heroes later)
         heroes.add(hero);
         return hero;

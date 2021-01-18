@@ -18,6 +18,7 @@ public class HeroViewSubController {
     private Label heroNameLabel;
     private Label heroLpLabel;
     private Label dungeonNameLabel;
+    private Label enemyNameLabel;
 
     public HeroViewSubController(Hero model, Parent view, RPGEditor editor) {
         this.model = model;
@@ -36,10 +37,9 @@ public class HeroViewSubController {
 
         // Add mouse actions
 
-
         // Init view with model
         heroNameLabel.setText(this.model.getName() +" [" +this.model.getMode() +"]");
-
+        heroLpLabel.setText(String.valueOf(this.model.getLp()) +"/" +"100");
     }
 
     public void stop() {
