@@ -3,13 +3,17 @@ package de.uniks.pmws2021.controller;
 import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
+import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
 import de.uniks.pmws2021.model.Enemy;
 import de.uniks.pmws2021.model.Hero;
+import de.uniks.pmws2021.model.HeroStat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -22,9 +26,11 @@ public class DungeonScreenController {
     private Button exitButton;
     private Button resetButton;
     private VBox enemySubView;
-    private ArrayList<HeroViewSubController> heroSubViewControllerList;
     private VBox heroSubView;
+    private ArrayList<HeroViewSubController> heroSubViewControllerList;
     private ArrayList<EnemyViewSubController> enemySubViewControllerList;
+    private Label dungeonNameLabel;
+    private VBox heroStatSubView;
 
     public DungeonScreenController(Parent view, RPGEditor editor) {
         this.view = view;
@@ -39,14 +45,19 @@ public class DungeonScreenController {
         resetButton = (Button) view.lookup("#ResetButton");
         heroSubView = (VBox) this.view.lookup("#HeroSubView");
         enemySubView = (VBox) this.view.lookup("#EnemySubView");
+        dungeonNameLabel = (Label) view.lookup("#DungeonNameLabel");
+        heroStatSubView = (VBox) view.lookup("#HeroStatSubView");
 
         // Add action listeners
         exitButton.setOnAction(this::exitButtonOnClick);
         resetButton.setOnAction(this::resetButtonOnClick);
 
+        //init Views
+        dungeonNameLabel.setText(this.editor.getDungeonName());
         // init subViews
         initHeroViewSubController();
         initEnemyViewSubController();
+        initHeroStatViewSubController();
     }
 
 
@@ -81,16 +92,12 @@ public class DungeonScreenController {
     // create and init EnemyViewSubController
     private void initEnemyViewSubController() {
 
-        //temp helper
-        Enemy enemy = new Enemy();
-
         try {
             Parent enemyView = FXMLLoader.load(StageManager.class.getResource("subview/EnemyView.fxml"));
-            //ToDo: better/other implementation?
             this.enemySubView.getChildren().clear();
             this.enemySubView.getChildren().add(enemyView);
 
-            EnemyViewSubController enemyViewSubController = new EnemyViewSubController(enemy, enemyView, this.editor);
+            EnemyViewSubController enemyViewSubController = new EnemyViewSubController(this.editor.getDungeon().getHero().getAttacking(), enemyView, this.editor);
             enemyViewSubController.init();
 
             // add subcontroller to list of controllers for removal
@@ -105,17 +112,12 @@ public class DungeonScreenController {
     // lookup heroSubView
     // create and init HeroViewSubController
     private void initHeroViewSubController() {
-
-        Hero hero = new Hero();
-        hero.setName("Kackapoo");
-
+        this.heroSubView.getChildren().clear();
         try {
             Parent heroView = FXMLLoader.load(StageManager.class.getResource("subview/HeroView.fxml"));
-            //ToDo: better/other implementation?
-            this.heroSubView.getChildren().clear();
             this.heroSubView.getChildren().add(heroView);
 
-            HeroViewSubController heroViewSubController = new HeroViewSubController(hero, heroView, this.editor);
+            HeroViewSubController heroViewSubController = new HeroViewSubController(this.editor.getDungeon().getHero(), heroView, this.editor);
             heroViewSubController.init();
 
             // add subcontroller to list of controllers for removal
@@ -131,5 +133,24 @@ public class DungeonScreenController {
     // load fxml for every stat
     // create and init HeroStatViewSubController for each
     // add to heroStatContainer in dungeonView
+    private void initHeroStatViewSubController() {
+        this.heroStatSubView.getChildren().clear();
+        for (HeroStat heroStat : editor.getDungeon().getHero().getStats()
+        ) {
+            try {
+                Parent heroStatView = FXMLLoader.load(StageManager.class.getResource("subview/HeroStatView.fxml"));
+                this.heroStatSubView.getChildren().add(heroStatView);
+
+                HeroStatViewSubController heroStatViewSubController = new HeroStatViewSubController(heroStat, heroStatView, this.editor);
+                heroStatViewSubController.init();
+
+                // add subcontroller to list of controllers for removal
+
+            } catch (IOException e) {
+                System.err.println("Failed to load Hero SubView :: initHeroViewSubController");
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

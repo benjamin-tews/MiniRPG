@@ -2,6 +2,7 @@ package de.uniks.pmws2021;
 
 import de.uniks.pmws2021.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -21,7 +22,7 @@ public class RPGEditor {
     // Enemy
     // ===========================================================================================
     // Editor lookup lists
-    private List<Hero> heroes;
+    private ArrayList<Hero> heroes = new ArrayList<>();
 
     // ===========================================================================================
     // Dungeon
@@ -35,6 +36,7 @@ public class RPGEditor {
 
     public Hero haveHero(String heroName, String hardMode) {
         // lookup hero in heroes list by heroName (This is important for saving heroes later)
+
         for (Hero hero : heroes) {
             if (hero.getName().equals(heroName)) {
                 return hero;
@@ -46,6 +48,35 @@ public class RPGEditor {
         // add hero to heroes list (This is important for saving heroes later)
         heroes.add(hero);
         return hero;
+    }
+
+    // returns ArrayList heroes
+    public ArrayList<Hero> getHeroes() {
+        // some test heroes
+        return this.heroes;
+    }
+
+    // returns hero if included in ArrayList heroes
+    public Hero getFromHeroes(String name) {
+        for (Hero hero : heroes
+             ) {
+            if(hero.getName().equals(name)) {
+                return hero;
+            }
+        }
+        return null;
+    }
+
+    public String getHeroName() {
+        if (this.dungeon == null) {
+            return "Dungeon is null";
+        } else {
+            return this.dungeon.getHero().getName();
+        }
+    }
+
+    public Dungeon getDungeon() {
+        return this.dungeon;
     }
 
     // If you want you can change this method and its parameter.
@@ -61,48 +92,24 @@ public class RPGEditor {
 
     public Dungeon haveDungeon(String dungeonName, Hero hero, Enemy... enemies) {
         // create enemy with given values
-        Dungeon dungeon = new Dungeon();
-        dungeon.setName(dungeonName).setHero(hero).withEnemy(enemies);
+        this.dungeon = new Dungeon();
+        this.dungeon.setName(dungeonName).setHero(hero).withEnemy(enemies);
         return this.dungeon;
     }
 
-    // Getter for Dungeon
-    public Dungeon getDungeon() {
-        return dungeon;
+    public String getDungeonName() {
+        if (this.dungeon == null) {
+            return "Dungeon is null";
+        } else {
+            return this.dungeon.getName();
+        }
     }
 
     public void enterDungeon(Hero hero) {
         // Put in your code
         // Use the have<Entity>() Method from above instead of new <Entity>()
-
-      /* OLD STUFF
-      Dungeon dungeon = new Dungeon();
-      Enemy enemy1 = new Enemy();
-      Enemy enemy2 = new Enemy();
-      Enemy enemy3 = new Enemy();
-
-      dungeon.withEnemy(enemy1, enemy2, enemy3);
-      dungeon.setHero(hero);
-      enemy1.setAttacking(hero);
-
-      enemy1.setNext(enemy2);
-      enemy3.setPrev(enemy2);
-
-      enemy1.setName("Goblin").setLp(30).setAtk(5).setDef(7).setCoins(5);
-      enemy2.setName("Ogre").setLp(60).setAtk(10).setDef(10).setCoins(7);
-      enemy3.setName("Hydra").setLp(50).setAtk(20).setDef(8).setCoins(10);
-
-      // in old implementation method was not void: -->
-      //return dungeon;
-
-       OLD STUFF */
-
         // ToDo: implement random stance later
-
-        //haveEnemy("Ogre", 60, 7, 10, 10, "defend");
-        //haveEnemy("Hydra", 50, 10, 20, 8, "defend");
-        haveDungeon("The Fire Pits", haveHero("Sir DanceALot", "normalMode"), haveEnemy("Goblin", 30, 5, 5, 7, "attack"));
-
+        haveDungeon("The Fire Pits", hero, haveEnemy("Goblin", 30, 5, 5, 7, "attack"));
     }
 
     public void heroStatUpdate(HeroStat heroStat) {
@@ -210,6 +217,7 @@ public class RPGEditor {
         }
 
     }
+
 
     public void evaluateFight(Enemy enemy, Hero hero) {
         // Put in your code

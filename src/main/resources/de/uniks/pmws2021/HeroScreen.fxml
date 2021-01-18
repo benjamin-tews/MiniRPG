@@ -43,14 +43,18 @@
                                           <Insets bottom="24.0" top="24.0" />
                                        </VBox.margin>
                                     </Text>
-                                    <ListView id="listView" fx:id="listView" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="NEVER">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <VBox.margin>
-                                          <Insets left="24.0" right="24.0" />
-                                       </VBox.margin>
-                                    </ListView>
+                                    <VBox id="HeroListVbox" prefHeight="200.0" prefWidth="100.0">
+                                       <children>
+                                          <ListView id="listView" fx:id="listView" editable="true" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="NEVER">
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <VBox.margin>
+                                                <Insets left="24.0" right="24.0" />
+                                             </VBox.margin>
+                                          </ListView>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </VBox>
                               <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="400.0">
@@ -94,7 +98,7 @@
                                                    <VBox.margin>
                                                       <Insets left="12.0" top="12.0" />
                                                    </VBox.margin></TextField>
-                                                <CheckBox mnemonicParsing="false" text="On">
+                                                <CheckBox id="HardModeCheckBox" mnemonicParsing="false" text="On">
                                                    <VBox.margin>
                                                       <Insets top="12.0" />
                                                    </VBox.margin>

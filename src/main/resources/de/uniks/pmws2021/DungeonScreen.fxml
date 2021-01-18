@@ -14,7 +14,7 @@
    <children>
       <HBox id="MiniRPG - Ingame" alignment="CENTER">
          <children>
-            <Label text="The Fire Pits">
+            <Label id="DungeonNameLabel" text="The Fire Pits">
                <font>
                   <Font name="Comic Sans MS Bold" size="36.0" />
                </font>
@@ -107,7 +107,7 @@
       </HBox>
       <HBox>
          <children>
-            <VBox prefHeight="150.0" prefWidth="454.0">
+            <VBox id="HeroStatSubView" prefHeight="150.0" prefWidth="454.0">
                <children>
                   <fx:include source="subview/HeroStatView.fxml" />
                </children>

@@ -1,6 +1,8 @@
 package de.uniks.pmws2021;
 
+import de.uniks.pmws2021.model.Hero;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -34,19 +36,28 @@ public class StageManagerTest extends ApplicationTest {
         // write Hero into Field
         TextField createHeroField = lookup("#CreateHeroField").query();
         Assert.assertEquals("Enter Hero Name", createHeroField.getPromptText());
-        clickOn("#CreateHeroField").write("Sir DanceALot");
-        Assert.assertEquals("Sir DanceALot", createHeroField.getText());
+        clickOn("#CreateHeroField").write("Batman");
+        Assert.assertEquals("Batman", createHeroField.getText());
+        CheckBox hardModeCheckbox = lookup("#HardModeCheckBox").query();
+        clickOn(hardModeCheckbox);
+        Assert.assertTrue(hardModeCheckbox.isSelected());
 
         // click button and change view to Ingame DungeonScreen
         clickOn("#CreateStartButton");
+        Label dungeonNameLabel = lookup("#DungeonNameLabel").query();
+        Assert.assertEquals("The Fire Pits", dungeonNameLabel.getText());
         Assert.assertEquals("MiniRPG - Ingame", stage.getTitle());
 
         // in HeroScreen: check hero name
         Label heroNameLabel = lookup("#HeroNameLabel").query();
-        Assert.assertEquals("Sir DanceALot", heroNameLabel.getText());
+        Assert.assertEquals("Batman [hc]", heroNameLabel.getText());
         // check ExitButton
         Button exitButton = lookup("#ExitButton").query();
         Assert.assertEquals("EXIT", exitButton.getText());
+
+        // check if hero is in hero List
+        Hero listHero = app.getModel().getFromHeroes("Batman");
+        Assert.assertNotNull(listHero);
 
         // click ExitButton and change view to Menu HeroScreen
         clickOn("#ExitButton");

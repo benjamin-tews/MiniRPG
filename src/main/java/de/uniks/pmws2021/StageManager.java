@@ -92,4 +92,8 @@ public class StageManager extends Application {
         super.stop();
         cleanup();
     }
+
+    public RPGEditor getModel() {
+        return rpgEditor;
+    }
 }

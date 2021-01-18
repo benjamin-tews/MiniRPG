@@ -4,6 +4,8 @@ import de.uniks.pmws2021.model.HeroStat;
 import de.uniks.pmws2021.RPGEditor;
 import javafx.scene.Parent;
 
+import java.util.List;
+
 public class HeroStatViewSubController {
 
     private RPGEditor editor;
@@ -11,9 +13,9 @@ public class HeroStatViewSubController {
     private HeroStat model;
 
     public HeroStatViewSubController(HeroStat model, Parent view, RPGEditor editor) {
-        this.editor = editor;
-        this.view = view;
         this.model = model;
+        this.view = view;
+        this.editor = editor;
     }
 
     // ===========================================================================================
