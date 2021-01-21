@@ -1,5 +1,6 @@
 package de.uniks.pmws2021.controller;
 
+import com.sun.glass.ui.Clipboard;
 import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
@@ -27,6 +28,7 @@ public class DungeonScreenController {
     private VBox heroSubView;
     private ArrayList<HeroViewSubController> heroSubViewControllerList;
     private ArrayList<EnemyViewSubController> enemySubViewControllerList;
+    private ArrayList<HeroStatViewSubController> heroStatSubViewControllerList;
     private Label dungeonNameLabel;
     private VBox heroStatSubView;
     private Label heroCoinsLabel;
@@ -36,6 +38,7 @@ public class DungeonScreenController {
         this.editor = editor;
         this.heroSubViewControllerList = new ArrayList<>();
         this.enemySubViewControllerList = new ArrayList<>();
+        this.heroStatSubViewControllerList = new ArrayList<>();
     }
 
     public void init() {
@@ -52,7 +55,7 @@ public class DungeonScreenController {
         exitButton.setOnAction(this::exitButtonOnClick);
         resetButton.setOnAction(this::resetButtonOnClick);
 
-        //init Views
+        // init Views
         dungeonNameLabel.setText(this.editor.getDungeonName());
         heroCoinsLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getCoins()));
 
@@ -78,9 +81,18 @@ public class DungeonScreenController {
         ) {
             enemyController.stop();
         }
+
+        for (HeroStatViewSubController heroStatViewController : heroStatSubViewControllerList
+        ) {
+            heroStatViewController.stop();
+        }
+
     }
 
-    // Additional methods
+    // ===========================================================================================
+    // Button Action Methods
+    // ===========================================================================================
+
     private void exitButtonOnClick(ActionEvent actionEvent) {
         StageManager.showHeroScreen();
     }
@@ -89,6 +101,11 @@ public class DungeonScreenController {
         // set all values to beginning and show DungeonScreen
         StageManager.showDungeonScreen();
     }
+
+    // ===========================================================================================
+    // additional Methods
+
+    // ===========================================================================================
 
     // lookup enemySubView
     // create and init EnemyViewSubController
@@ -137,8 +154,8 @@ public class DungeonScreenController {
     // add to heroStatContainer in dungeonView
     private void initHeroStatViewSubController() {
         this.heroStatSubView.getChildren().clear();
-        for ( HeroStat heroStat : this.editor.getDungeon().getHero().getStats()
-             ){
+        for (HeroStat heroStat : this.editor.getDungeon().getHero().getStats()
+        ) {
             try {
                 Parent heroStatView = FXMLLoader.load(StageManager.class.getResource("subview/HeroStatView.fxml"));
                 this.heroStatSubView.getChildren().add(heroStatView);
@@ -147,6 +164,7 @@ public class DungeonScreenController {
                 heroStatViewSubController.init();
 
                 // add subcontroller to list of controllers for removal
+                heroStatSubViewControllerList.add(heroStatViewSubController);
 
             } catch (IOException e) {
                 System.err.println("Failed to load Hero SubView :: initHeroViewSubController");

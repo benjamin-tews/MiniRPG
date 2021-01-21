@@ -22,15 +22,16 @@ public class HeroViewSubController {
     private Label enemyNameLabel;
     private Pane hardmodeImagePane;
 
+
+    // ===========================================================================================
+    // Controller
+    // ===========================================================================================
+
     public HeroViewSubController(Hero model, Parent view, RPGEditor editor) {
         this.model = model;
         this.view = view;
         this.editor = editor;
     }
-
-    // ===========================================================================================
-    // Controller
-    // ===========================================================================================
 
     public void init() {
         // Load all view references
@@ -52,10 +53,12 @@ public class HeroViewSubController {
 
     }
 
-    public void stop() {
-    }
 
     // ===========================================================================================
     // Button Action Methods
     // ===========================================================================================
+
+    public void stop() {
+    }
+
 }

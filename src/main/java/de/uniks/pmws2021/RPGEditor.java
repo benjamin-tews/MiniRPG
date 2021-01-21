@@ -168,32 +168,32 @@ public class RPGEditor {
         String attack = Stances.stances[0];
         String defend = Stances.stances[1];
 
-        //hero is null
+        // hero is null
         if (hero == null) {
             throw new NullPointerException("empty hero - doh!");
         }
 
-        //heroStance is neither "defend" nor "attack"
+        // heroStance is neither "defend" nor "attack"
         /* wrong AND implementation - need to check for both statements */
         if (!(heroStance.equals(defend) | heroStance.equals(attack))) {
             throw new RuntimeException("Invalid Stance combination");
         }
 
-        //both attack
+        // both attack
         if (heroStance == attack && hero.getAttacking().getStance() == attack) {
 
-            //set heros life
+            // set heros life
             if ((hero.getLp() - hero.getAttacking().getAtk()) <= 0) {
                 hero.setLp(0);
             } else {
                 hero.setLp(hero.getLp() - hero.getAttacking().getAtk());
             }
 
-            //take first object of AttackStat and create local object
+            // take first object of AttackStat and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof AttackStat).findFirst();
             HeroStat attackingStat = firstHeroStat.get();
 
-            //sets the enemy's lifepoints
+            // sets the enemy's lifepoints
             if ((hero.getAttacking().getLp() - attackingStat.getValue()) <= 0) {
                 hero.getAttacking().setLp(0);
             } else {
@@ -201,15 +201,15 @@ public class RPGEditor {
             }
         }
 
-        //hero attacks and enemy defends
+        //  hero attacks and enemy defends
         else if (heroStance == attack && hero.getAttacking().getStance() == defend) {
-            //take first object of AttackStat and create local object
+            // take first object of AttackStat and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof AttackStat).findFirst();
             HeroStat attackingStat = firstHeroStat.get();
-            //sets the enemy's lifepoints
+            // sets the enemy's lifepoints
             /* implementation error - fixed this if statement */
 
-            //calculate incomming damage
+            // calculate incomming damage
             int damage = (((attackingStat.getValue() - hero.getAttacking().getDef()) > 0) ? (attackingStat.getValue() - hero.getAttacking().getDef()) : 0);
 
             if ((hero.getAttacking().getLp() - (damage)) <= 0) {
@@ -219,32 +219,32 @@ public class RPGEditor {
             }
         }
 
-        //hero defends and enemy attacks
+        // hero defends and enemy attacks
         else if (heroStance == defend && hero.getAttacking().getStance() == attack) {
-            //take first object of DefenseStats and create local object
+            // take first object of DefenseStats and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof DefenseStat).findFirst();
             HeroStat defenceStat = firstHeroStat.get();
 
-            //set heroes lp
+            // set heroes lp
             /* implementation error: wrong lp calculation -> fixed it */
 
             int damage = (((hero.getAttacking().getAtk() - defenceStat.getValue()) > 0) ? (hero.getAttacking().getAtk() - defenceStat.getValue()) : 0);
 
             if ((hero.getLp() - damage) <= 0) {
                 hero.setLp(0);
-                //remove hero from dungeon
-                //hero.setDungeon(null);
+                // remove hero from dungeon
+                // hero.setDungeon(null);
             } else {
                 hero.setLp(hero.getLp() - damage);
             }
         }
 
-        //both defend
+        // both defend
         else if (heroStance == defend && hero.getAttacking().getStance() == defend) {
-            //take first object of DefenseStats and create local object
-            //set hero lp
+            // take first object of DefenseStats and create local object
+            // set hero lp
             hero.setLp(hero.getLp());
-            //set enemy lp
+            // set enemy lp
             hero.getAttacking().setLp(hero.getAttacking().getLp());
         }
 
@@ -273,10 +273,10 @@ public class RPGEditor {
 
         // if enemy died in fight and hero still lives ...
         if ((enemy.getLp() == 0) & (hero.getLp() > 0)) {
-            //hero gets its coins
+            // hero gets its coins
             hero.setCoins(hero.getCoins() + enemy.getCoins());
         } else {
-            //enemy still alive: set enemy random stance
+            // enemy still alive: set enemy random stance
             enemy.setStance(rndStance);
         }
 
@@ -284,19 +284,19 @@ public class RPGEditor {
         while ((enemy.getLp() == 0) & (enemy.getNext() != null) & (hero.getLp() > 0)) {
             Enemy nextEnemy;
             nextEnemy = enemy.getNext();
-            //remove dead enemy and its links
+            // remove dead enemy and its links
             enemy.setNext(null);
             hero.getDungeon().withoutEnemy(enemy);
-            //set enemy to next enemy
+            // set enemy to next enemy
             enemy = nextEnemy;
             hero.setAttacking(enemy);
-            //fight against next enemy
+            // fight against next enemy
             heroEngagesFight("attack", hero);
             if (enemy.getLp() == 0) {
-                //hero gets its coins
+                // hero gets its coins
                 hero.setCoins(hero.getCoins() + enemy.getCoins());
             } else {
-                //enemy still alive: set enemy random stance
+                // enemy still alive: set enemy random stance
                 enemy.setStance(rndStance);
             }
         }

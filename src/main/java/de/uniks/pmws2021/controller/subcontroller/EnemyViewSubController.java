@@ -20,15 +20,16 @@ public class EnemyViewSubController {
     private Label enemyLpLabel;
     private Pane enemyStancePane;
 
+
+    // ===========================================================================================
+    // Controller
+    // ===========================================================================================
+
     public EnemyViewSubController(Enemy model, Parent view, RPGEditor editor) {
         this.model = model;
         this.view = view;
         this.editor = editor;
     }
-
-   // ===========================================================================================
-   // Controller
-   // ===========================================================================================
 
     public void init() {
         // Load all view references
@@ -46,7 +47,7 @@ public class EnemyViewSubController {
 
         // Init view with model
         enemyNameLabel.setText(model.getName());
-        enemyLpLabel.setText(String.valueOf(model.getLp()) +"/" +String.valueOf(model.getLp()) );
+        enemyLpLabel.setText(String.valueOf(model.getLp()) + "/" + String.valueOf(model.getLp()));
         if (model.getStance().equals("attack")) {
             enemyStancePane.getChildren().add(attackImageView);
         } else if (model.getStance().equals("defend")) {

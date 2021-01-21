@@ -2,7 +2,6 @@ package de.uniks.pmws2021.controller.subcontroller;
 
 import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.model.Hero;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 
