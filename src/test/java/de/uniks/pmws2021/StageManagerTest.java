@@ -33,7 +33,7 @@ public class StageManagerTest extends ApplicationTest {
         Assert.assertEquals("Create & Enter Dungeon", createStartButton.getText());
         Assert.assertEquals("MiniRPG - Main Menu", stage.getTitle());
 
-        // write Hero into Field
+        // HERO SCREEN
         TextField createHeroField = lookup("#CreateHeroField").query();
         Assert.assertEquals("Enter Hero Name", createHeroField.getPromptText());
         clickOn("#CreateHeroField").write("Batman");
@@ -42,15 +42,24 @@ public class StageManagerTest extends ApplicationTest {
         clickOn(hardModeCheckbox);
         Assert.assertTrue(hardModeCheckbox.isSelected());
 
-        // click button and change view to Ingame DungeonScreen
+        // DUNGEON SCREEN
         clickOn("#CreateStartButton");
         Label dungeonNameLabel = lookup("#DungeonNameLabel").query();
         Assert.assertEquals("The Fire Pits", dungeonNameLabel.getText());
         Assert.assertEquals("MiniRPG - Ingame", stage.getTitle());
+        Label enemyNameLabel = lookup("#EnemyNameLabel").query();
+        Assert.assertEquals("Shinigami", enemyNameLabel.getText());
+        // ToDo: make this one more dynamic
+        Assert.assertEquals("attack", app.getModel().getDungeon().getEnemy().get(0).getStance());
+        Assert.assertEquals(1, app.getModel().getDungeon().getEnemy().stream().count());
+        Label enemyLpLabel = lookup("#EnemyLpLabel").query();
+        Assert.assertEquals("30/30", enemyLpLabel.getText());
+        Label heroCoinsLabel = lookup("#HeroCoinsLabel").query();
+        Assert.assertEquals("20", heroCoinsLabel.getText());
 
-        // in HeroScreen: check hero name
+        // HERO SCREEN
         Label heroNameLabel = lookup("#HeroNameLabel").query();
-        Assert.assertEquals("Batman [hc]", heroNameLabel.getText());
+        Assert.assertEquals("Batman", heroNameLabel.getText());
         // check ExitButton
         Button exitButton = lookup("#ExitButton").query();
         Assert.assertEquals("EXIT", exitButton.getText());
@@ -58,6 +67,7 @@ public class StageManagerTest extends ApplicationTest {
         // check if hero is in hero List
         Hero listHero = app.getModel().getFromHeroes("Batman");
         Assert.assertNotNull(listHero);
+        System.out.print("");
 
         // click ExitButton and change view to Menu HeroScreen
         clickOn("#ExitButton");

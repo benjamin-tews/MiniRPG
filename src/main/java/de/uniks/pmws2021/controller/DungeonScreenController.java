@@ -29,6 +29,7 @@ public class DungeonScreenController {
     private ArrayList<EnemyViewSubController> enemySubViewControllerList;
     private Label dungeonNameLabel;
     private VBox heroStatSubView;
+    private Label heroCoinsLabel;
 
     public DungeonScreenController(Parent view, RPGEditor editor) {
         this.view = view;
@@ -45,6 +46,7 @@ public class DungeonScreenController {
         enemySubView = (VBox) this.view.lookup("#EnemySubView");
         dungeonNameLabel = (Label) view.lookup("#DungeonNameLabel");
         heroStatSubView = (VBox) view.lookup("#HeroStatSubView");
+        heroCoinsLabel = (Label) view.lookup("#HeroCoinsLabel");
 
         // Add action listeners
         exitButton.setOnAction(this::exitButtonOnClick);
@@ -52,6 +54,8 @@ public class DungeonScreenController {
 
         //init Views
         dungeonNameLabel.setText(this.editor.getDungeonName());
+        heroCoinsLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getCoins()));
+
         // init subViews
         initHeroViewSubController();
         initEnemyViewSubController();
@@ -133,24 +137,23 @@ public class DungeonScreenController {
     // add to heroStatContainer in dungeonView
     private void initHeroStatViewSubController() {
         this.heroStatSubView.getChildren().clear();
-        AttackStat attackStat = new AttackStat();
-        DefenseStat defenseStat = new DefenseStat();
-        attackStat.setLevel(1).setValue(10).setCost(10);
-        defenseStat.setLevel(2).setValue(20).setCost(10);
-        this.editor.getDungeon().getHero().withStats(attackStat, defenseStat);
-        try {
-            Parent heroStatView = FXMLLoader.load(StageManager.class.getResource("subview/HeroStatView.fxml"));
-            this.heroStatSubView.getChildren().add(heroStatView);
+        for ( HeroStat heroStat : this.editor.getDungeon().getHero().getStats()
+             ){
+            try {
+                Parent heroStatView = FXMLLoader.load(StageManager.class.getResource("subview/HeroStatView.fxml"));
+                this.heroStatSubView.getChildren().add(heroStatView);
 
-            HeroStatViewSubController heroStatViewSubController = new HeroStatViewSubController(this.editor.getDungeon().getHero().getStats(), heroStatView, this.editor);
-            heroStatViewSubController.init();
+                HeroStatViewSubController heroStatViewSubController = new HeroStatViewSubController(heroStat, heroStatView, this.editor);
+                heroStatViewSubController.init();
 
-            // add subcontroller to list of controllers for removal
+                // add subcontroller to list of controllers for removal
 
-        } catch (IOException e) {
-            System.err.println("Failed to load Hero SubView :: initHeroViewSubController");
-            e.printStackTrace();
+            } catch (IOException e) {
+                System.err.println("Failed to load Hero SubView :: initHeroViewSubController");
+                e.printStackTrace();
+            }
         }
+
     }
 
 }

@@ -125,7 +125,7 @@
                                                 <Insets right="12.0" />
                                              </HBox.margin>
                                           </Text>
-                                          <Label text="1">
+                                          <Label id="StartAttackLevelLabel" text="1">
                                              <HBox.margin>
                                                 <Insets right="12.0" />
                                              </HBox.margin>
@@ -138,7 +138,7 @@
                                                 <Insets right="12.0" />
                                              </HBox.margin>
                                           </Text>
-                                          <Label text="10">
+                                          <Label id="StartAttackValueLabel" text="10">
                                              <HBox.margin>
                                                 <Insets right="12.0" />
                                              </HBox.margin>
@@ -151,7 +151,7 @@
                                                 <Insets right="12.0" />
                                              </HBox.margin>
                                           </Text>
-                                          <Label text="10">
+                                          <Label id="StartAttackCostLabel" text="10">
                                              <HBox.margin>
                                                 <Insets right="12.0" />
                                              </HBox.margin>
@@ -189,7 +189,7 @@
                                                 <Insets right="12.0" />
                                              </HBox.margin>
                                           </Text>
-                                          <Label text="1">
+                                          <Label id="StartDefenseLevelLabel" text="1">
                                              <HBox.margin>
                                                 <Insets right="12.0" />
                                              </HBox.margin>
@@ -202,7 +202,7 @@
                                                 <Insets right="12.0" />
                                              </HBox.margin>
                                           </Text>
-                                          <Label text="10">
+                                          <Label id="StartDefenseValueLabel" text="10">
                                              <HBox.margin>
                                                 <Insets right="12.0" />
                                              </HBox.margin>
@@ -215,7 +215,7 @@
                                                 <Insets right="12.0" />
                                              </HBox.margin>
                                           </Text>
-                                          <Label text="10">
+                                          <Label id="StartDefenseCostLabel" text="10">
                                              <HBox.margin>
                                                 <Insets right="12.0" />
                                              </HBox.margin>
@@ -228,7 +228,7 @@
                                                 <Insets left="12.0" />
                                              </HBox.margin>
                                           </ImageView>
-                                          <Label text="0">
+                                          <Label id="StartCoinsLabel" text="0">
                                              <HBox.margin>
                                                 <Insets left="12.0" />
                                              </HBox.margin>

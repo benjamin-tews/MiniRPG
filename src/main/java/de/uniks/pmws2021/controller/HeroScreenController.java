@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -20,8 +21,8 @@ import java.util.ArrayList;
 
 public class HeroScreenController {
     //ToDo: Fix Pathname
-    File myImage = new File("C:\\Users\\Shrabbit\\UNI\\Programmierung und Modellierung 2021\\pmws2021-minirpg-benjamin-tews\\src\\main\\resources\\de\\uniks\\pmws2021\\img\\skull.png");
-    private Image skull = new Image(myImage.toURI().toString());
+    //File myImage = new File("C:\\Users\\Shrabbit\\UNI\\Programmierung und Modellierung 2021\\pmws2021-minirpg-benjamin-tews\\src\\main\\resources\\de\\uniks\\pmws2021\\img\\skull.png");
+    //private Image skull = new Image(myImage.toURI().toString());
     private Parent view;
     private RPGEditor editor;
     private Button createStartButton;
@@ -33,6 +34,13 @@ public class HeroScreenController {
     private VBox heroListVbox;
     private ArrayList<HeroSubListController> heroSubListControllerList;
     private Button refreshButton;
+    private Label startAttackLevelLabel;
+    private Label startAttackValueLabel;
+    private Label startAttackCostLabel;
+    private Label startCoinsLabel;
+    private Label startDefenseLevelLabel;
+    private Label startDefenseValueLabel;
+    private Label startDefenseCostLabel;
 
     public HeroScreenController(Parent view, RPGEditor editor) {
         this.view = view;
@@ -48,11 +56,29 @@ public class HeroScreenController {
         hardModeCheckBox = (CheckBox) view.lookup("#HardModeCheckBox");
         heroListVbox = (VBox) view.lookup("#HeroListVbox");
 
+        startAttackLevelLabel = (Label) view.lookup("#StartAttackLevelLabel");
+        startAttackValueLabel = (Label) view.lookup("#StartAttackValueLabel");
+        startAttackCostLabel = (Label) view.lookup("#StartAttackCostLabel");
+        startDefenseLevelLabel = (Label) view.lookup("#StartDefenseLevelLabel");
+        startDefenseValueLabel = (Label) view.lookup("#StartDefenseValueLabel");
+        startDefenseCostLabel = (Label) view.lookup("#StartDefenseCostLabel");
+
+        startCoinsLabel = (Label) view.lookup("#StartCoinsLabel");
+
         // Add action listeners
         createStartButton.setOnAction(this::createStartButtonOnClick);
         exitButton.setOnAction(this::exitButtonOnClick);
 
         // init views
+        startAttackLevelLabel.setText(String.valueOf(editor.getStartAttackStats().getLevel()));
+        startAttackValueLabel.setText(String.valueOf(editor.getStartAttackStats().getValue()));
+        startAttackCostLabel.setText(String.valueOf(editor.getStartAttackStats().getCost()));
+        startDefenseLevelLabel.setText(String.valueOf(editor.getStartDefenseStats().getLevel()));
+        startDefenseValueLabel.setText(String.valueOf(editor.getStartDefenseStats().getValue()));
+        startDefenseCostLabel.setText(String.valueOf(editor.getStartDefenseStats().getCost()));
+
+        startCoinsLabel.setText(String.valueOf(editor.getStartCoins()));
+
         // add some heroes
         this.editor.haveHero("init hero1", "hc");
         this.editor.haveHero("init hero 2", "hc");
@@ -112,17 +138,24 @@ public class HeroScreenController {
     }
 
     private void createStartButtonOnClick(ActionEvent actionEvent) {
-        if (hardModeCheckBox.isSelected()) {
-            this.editor.enterDungeon(this.editor.haveHero(createHeroField.getText(), "hc"));
-            this.editor.haveHero(createHeroField.getText(), "hc");
+        // if no hero than message box
+        if (createHeroField.getText() == null || createHeroField.getText().trim().isEmpty()) {
+            Alert fail = new Alert(Alert.AlertType.WARNING);
+            fail.setHeaderText("Empty Hero Input Field");
+            fail.setContentText("Please do enter Hero Name");
+            fail.showAndWait();
         } else {
-            this.editor.enterDungeon(this.editor.haveHero(createHeroField.getText(), "normal"));
+
+            if (hardModeCheckBox.isSelected()) {
+                this.editor.enterDungeon(this.editor.haveHero(createHeroField.getText(), "hc"));
+            } else {
+                this.editor.enterDungeon(this.editor.haveHero(createHeroField.getText(), "normal"));
+            }
+
+            StageManager.showDungeonScreen();
+
+            // it should become the current hero?!
         }
-
-        StageManager.showDungeonScreen();
-
-        // it should become the current hero?!
-
     }
 
     private void initHeroListSubController() {

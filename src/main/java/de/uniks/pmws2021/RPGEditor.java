@@ -8,30 +8,19 @@ import java.util.Random;
 
 public class RPGEditor {
 
-    // constants
+
     final static int MAX_LIFE = 100;
     final static int UPGRADE_COST = 50;
+    final static int START_COINS = 20;
+    final static double UPGRADE_FACTOR = 1.1;
+
+    private Dungeon dungeon;
+    private ArrayList<Hero> heroes = new ArrayList<>();
 
     // ===========================================================================================
     // Hero
     // ===========================================================================================
-    final static double UPGRADE_FACTOR = 1.1;
 
-    // ===========================================================================================
-    // Enemy
-    // ===========================================================================================
-    // Editor lookup lists
-    private ArrayList<Hero> heroes = new ArrayList<>();
-
-    // ===========================================================================================
-    // Dungeon
-    // ===========================================================================================
-    // Connection to model root object
-    private Dungeon dungeon;
-
-    // ===========================================================================================
-    // Game Logic
-    // ===========================================================================================
 
     public Hero haveHero(String heroName, String hardMode) {
         // lookup hero in heroes list by heroName (This is important for saving heroes later)
@@ -49,18 +38,19 @@ public class RPGEditor {
         heroes.add(hero);
         return hero;
     }
-
     // returns ArrayList heroes
+
     public ArrayList<Hero> getHeroes() {
         // some test heroes
         return this.heroes;
     }
-
     // returns hero if included in ArrayList heroes
+
+
     public Hero getFromHeroes(String name) {
         for (Hero hero : heroes
-             ) {
-            if(hero.getName().equals(name)) {
+        ) {
+            if (hero.getName().equals(name)) {
                 return hero;
             }
         }
@@ -75,20 +65,36 @@ public class RPGEditor {
         }
     }
 
-    public Dungeon getDungeon() {
-        return this.dungeon;
+    // start values defaults attack
+    public AttackStat getStartAttackStats() {
+        AttackStat startAttackStat = new AttackStat();
+        startAttackStat.setLevel(1).setValue(11).setCost(5);
+        return startAttackStat;
     }
+    // start values defaults defense
 
-    // If you want you can change this method and its parameter.
-    // For example: you can implement a random mechanisem that generates enemies by a defined set of enemies
-    // Or you keep it as fixed as it is now
+    public DefenseStat getStartDefenseStats() {
+        DefenseStat startDefenseStat = new DefenseStat();
+        startDefenseStat.setLevel(1).setValue(22).setCost(5);
+        return startDefenseStat;
+    }
+    // ===========================================================================================
+    // Enemy
+    // ===========================================================================================
+
+    // Editor lookup lists
     public Enemy haveEnemy(String name, int lp, int coins, int atk, int def, String stance) {
         // create enemy with initial and/or given values
         // ToDo: implement more dynamic enemies later
+
         Enemy enemy = new Enemy();
         enemy.setName(name).setLp(lp).setCoins(coins).setAtk(atk).setDef(def).setStance(stance);
         return enemy;
     }
+
+    // ===========================================================================================
+    // Dungeon
+    // ===========================================================================================
 
     public Dungeon haveDungeon(String dungeonName, Hero hero, Enemy... enemies) {
         // create enemy with given values
@@ -96,6 +102,18 @@ public class RPGEditor {
         this.dungeon.setName(dungeonName).setHero(hero).withEnemy(enemies);
         return this.dungeon;
     }
+
+    // Connection to model root object
+
+
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+    // If you want you can change this method and its parameter.
+    // For example: you can implement a random mechanisem that generates enemies by a defined set of enemies
+
+    // Or you keep it as fixed as it is now
+
 
     public String getDungeonName() {
         if (this.dungeon == null) {
@@ -105,11 +123,25 @@ public class RPGEditor {
         }
     }
 
+    public int getStartCoins() {
+        return START_COINS;
+    }
+
+
+    // ===========================================================================================
+    // Game Logic
+    // ===========================================================================================
+
     public void enterDungeon(Hero hero) {
         // Put in your code
         // Use the have<Entity>() Method from above instead of new <Entity>()
         // ToDo: implement random stance later
-        haveDungeon("The Fire Pits", hero, haveEnemy("Goblin", 30, 5, 5, 7, "attack"));
+
+        // ToDo: initial stats from input fields in hero screen
+        hero.withStats(getStartAttackStats(), getStartDefenseStats());
+        hero.setCoins(START_COINS);
+
+        haveDungeon("The Fire Pits", hero, haveEnemy("Shinigami", 30, 5, 5, 7, "attack"));
     }
 
     public void heroStatUpdate(HeroStat heroStat) {
@@ -122,7 +154,7 @@ public class RPGEditor {
             throw new NullPointerException("empty stats - doh!");
         }
 
-        if (heroStat.getHero().getCoins() - UPGRADE_COST < 0) {
+        if (heroStat.getHero().getCoins() - UPGRADE_COST <= 0) {
             throw new RuntimeException("Too less coins in wallet - no Upgrade possible!");
         } else {
             heroStat.getHero().setCoins(heroStat.getHero().getCoins() - UPGRADE_COST);
@@ -222,11 +254,11 @@ public class RPGEditor {
     public void evaluateFight(Enemy enemy, Hero hero) {
         // Put in your code
 
-        //create random Stance of stances array ... 0 or 1
+        // create random Stance of stances array ... 0 or 1
         Random random = new Random();
         String rndStance = Stances.stances[random.nextInt(Stances.stances.length)];
 
-        //Exceptions to throw
+        // Exceptions to throw
         if (hero == null) {
             throw new NullPointerException("empty hero - doh!");
         }
@@ -236,10 +268,10 @@ public class RPGEditor {
         }
 
         /* whole new implementation was necessary cause of wrong task assumptions */
-        //initial fight round
+        // initial fight round
         heroEngagesFight("attack", hero);
 
-        //if enemy died in fight and hero still lives ...
+        // if enemy died in fight and hero still lives ...
         if ((enemy.getLp() == 0) & (hero.getLp() > 0)) {
             //hero gets its coins
             hero.setCoins(hero.getCoins() + enemy.getCoins());
@@ -248,7 +280,7 @@ public class RPGEditor {
             enemy.setStance(rndStance);
         }
 
-        //if died enemy got next enemy and hero s still alive
+        // if died enemy got next enemy and hero s still alive
         while ((enemy.getLp() == 0) & (enemy.getNext() != null) & (hero.getLp() > 0)) {
             Enemy nextEnemy;
             nextEnemy = enemy.getNext();
@@ -269,9 +301,11 @@ public class RPGEditor {
             }
         }
 
-        //at the end of round
+        // at the end of round
         hero.setAttacking(null);
         hero.getDungeon().withoutEnemy(enemy);
         hero.setLp(MAX_LIFE);
+
     }
+
 }
