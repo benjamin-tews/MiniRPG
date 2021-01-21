@@ -13,8 +13,6 @@ public class HeroStatUpdateTest {
     @Test
     public void testHeroStatUpdateNormalBehaviour() {
 
-        //TemporaryGameController gc = new TemporaryGameController();
-
         //create stats
         HeroStat attackStats = new AttackStat();
         HeroStat defenceStats = new DefenseStat();
@@ -38,8 +36,6 @@ public class HeroStatUpdateTest {
 
     @Test
     public void testHeroStatUpdateNotEnoughCoins() {
-
-        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -68,8 +64,6 @@ public class HeroStatUpdateTest {
 
     @Test
     public void testHeroStatUpdateNullStat() {
-
-        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -100,8 +94,6 @@ public class HeroStatUpdateTest {
     @Test
     public void testHeroStatUpdateNullHero() {
 
-        //TemporaryGameController gc = new TemporaryGameController();
-
         //create stats
         HeroStat attackStats = new AttackStat();
         HeroStat defenceStats = new DefenseStat();
@@ -125,8 +117,6 @@ public class HeroStatUpdateTest {
 
     @Test
     public void testHeroStatUpdateNegativePrice() {
-
-        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
