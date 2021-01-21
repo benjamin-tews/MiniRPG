@@ -1,16 +1,19 @@
 package de.uniks.pmws2021.controller;
 
 
+import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class EvaluateFightTest {
 
+    RPGEditor gc = new RPGEditor();
+
     @Test
     public void evaluateFightEnemyDies() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -50,7 +53,7 @@ public class EvaluateFightTest {
 
         //if enemy survives - hero have to die
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -94,7 +97,7 @@ public class EvaluateFightTest {
     @Test
     public void evaluateFightHeroNormalModeHeal() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -137,7 +140,7 @@ public class EvaluateFightTest {
     @Test
     public void evaluateFightHeroHardModeHeal() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -198,7 +201,7 @@ public class EvaluateFightTest {
     @Test
     public void evaluateFightHeroNull() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create Hero with stats and coins and so ...
         Hero myHero = new Hero();
@@ -219,7 +222,7 @@ public class EvaluateFightTest {
     @Test
     public void evaluateFightEnemyNull() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create Hero with stats and coins and so ...
         Hero myHero = new Hero();

@@ -1,5 +1,6 @@
 package de.uniks.pmws2021.controller;
 
+import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.model.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,10 +8,12 @@ import org.junit.Test;
 
 public class HeroStatUpdateTest {
 
+    RPGEditor gc = new RPGEditor();
+
     @Test
     public void testHeroStatUpdateNormalBehaviour() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -36,7 +39,7 @@ public class HeroStatUpdateTest {
     @Test
     public void testHeroStatUpdateNotEnoughCoins() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -66,7 +69,7 @@ public class HeroStatUpdateTest {
     @Test
     public void testHeroStatUpdateNullStat() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -97,7 +100,7 @@ public class HeroStatUpdateTest {
     @Test
     public void testHeroStatUpdateNullHero() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -123,7 +126,7 @@ public class HeroStatUpdateTest {
     @Test
     public void testHeroStatUpdateNegativePrice() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();

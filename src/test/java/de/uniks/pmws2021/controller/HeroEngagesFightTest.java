@@ -1,5 +1,6 @@
 package de.uniks.pmws2021.controller;
 
+import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.model.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,10 +8,12 @@ import org.junit.Test;
 
 public class HeroEngagesFightTest {
 
+    RPGEditor gc = new RPGEditor();
+
     @Test
     public void testHeroEngagesFightBothDefend() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -40,7 +43,7 @@ public class HeroEngagesFightTest {
     @Test
     public void testHeroEngagesFightBothAttack() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -70,7 +73,7 @@ public class HeroEngagesFightTest {
     @Test
     public void testHeroEngagesFightEnemyDefendHeroAttack() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -100,7 +103,7 @@ public class HeroEngagesFightTest {
     @Test
     public void testHeroEngagesFightEnemyAttackHeroDefend() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -129,7 +132,7 @@ public class HeroEngagesFightTest {
     @Test
     public void testHeroEngagesFightNullHero() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
@@ -160,7 +163,7 @@ public class HeroEngagesFightTest {
     @Test
     public void testHeroEngagesFightUnknownStance() {
 
-        TemporaryGameController gc = new TemporaryGameController();
+        //TemporaryGameController gc = new TemporaryGameController();
 
         //create stats
         HeroStat attackStats = new AttackStat();
