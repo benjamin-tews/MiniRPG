@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 
@@ -16,8 +18,11 @@ public class HeroViewSubController {
     private RPGEditor editor;
     private Parent view;
     private Hero model;
+    ;
+    private PropertyChangeListener onAttackingChanged = this::OnAttackingChanged;
     private Label heroNameLabel;
     private Label heroLpLabel;
+    private PropertyChangeListener onLpChanged = this::OnLpChanged;
     private Label dungeonNameLabel;
     private Label enemyNameLabel;
     private Pane hardmodeImagePane;
@@ -51,14 +56,28 @@ public class HeroViewSubController {
             hardmodeImagePane.getChildren().add(imageView);
         }
 
+        // PCL
+        this.model.addPropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
+        this.model.addPropertyChangeListener(Hero.PROPERTY_ATTACKING, onAttackingChanged);
+
     }
 
+    private void OnLpChanged(PropertyChangeEvent event) {
+        heroLpLabel.setText(String.valueOf(this.model.getLp()) + "/" + "100");
+    }
+
+    private void OnAttackingChanged(PropertyChangeEvent event) {
+        // ToDo Fix attacking attributes
+        this.editor.evaluateFight(this.model.getAttacking(), this.model);
+    }
+
+    public void stop() {
+        this.model.removePropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
+        this.model.removePropertyChangeListener(Hero.PROPERTY_ATTACKING, onAttackingChanged);
+    }
 
     // ===========================================================================================
     // Button Action Methods
     // ===========================================================================================
-
-    public void stop() {
-    }
 
 }

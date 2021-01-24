@@ -1,6 +1,7 @@
 package de.uniks.pmws2021;
 
 import de.uniks.pmws2021.model.Hero;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -55,7 +56,10 @@ public class StageManagerTest extends ApplicationTest {
         Label enemyLpLabel = lookup("#EnemyLpLabel").query();
         Assert.assertEquals("30/30", enemyLpLabel.getText());
         Label heroCoinsLabel = lookup("#HeroCoinsLabel").query();
-        Assert.assertEquals("20", heroCoinsLabel.getText());
+        Assert.assertEquals("50", heroCoinsLabel.getText());
+        Button attackButton = lookup("#AttackButton").query();
+        clickOn(attackButton);
+        clickOn(attackButton);
 
         // HERO SCREEN
         Label heroNameLabel = lookup("#HeroNameLabel").query();
@@ -67,12 +71,15 @@ public class StageManagerTest extends ApplicationTest {
         // check if hero is in hero List
         Hero listHero = app.getModel().getFromHeroes("Batman");
         Assert.assertNotNull(listHero);
-        System.out.print("");
 
         // click ExitButton and change view to Menu HeroScreen
         clickOn("#ExitButton");
         Assert.assertEquals("MiniRPG - Main Menu", stage.getTitle());
         // check if CreateHeroField is empty
+        // check if hero is in hero List
+        listHero = app.getModel().getFromHeroes("Batman");
+        Assert.assertNotNull(listHero);
+
         TextField newCreateHeroField = lookup("#CreateHeroField").query();
         Assert.assertEquals("", newCreateHeroField.getText());
         Assert.assertEquals("Enter Hero Name", createHeroField.getPromptText());

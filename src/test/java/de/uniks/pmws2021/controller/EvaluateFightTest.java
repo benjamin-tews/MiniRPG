@@ -36,6 +36,7 @@ public class EvaluateFightTest {
         dungeon.setHero(myHero);
 
         // call method
+        gc.heroEngagesFight("attack", myHero);
         gc.evaluateFight(myEnemy, myHero);
 
         // LP of enemy should be zero
@@ -75,6 +76,7 @@ public class EvaluateFightTest {
         dungeon.setHero(myHero);
 
         // call method
+        gc.heroEngagesFight("attack", myHero);
         gc.evaluateFight(myEnemy, myHero);
 
         /* optimized assertion - changed values: increased enemy lifepoints and set hero lp to zero */
@@ -115,6 +117,7 @@ public class EvaluateFightTest {
         dungeon.setHero(myHero);
 
         // call method
+        gc.heroEngagesFight("attack", myHero);
         gc.evaluateFight(myEnemy, myHero);
 
         // check if mode normal and check if lifepoints set to max after defeating enemy
@@ -164,6 +167,7 @@ public class EvaluateFightTest {
         dungeon.setHero(myHero);
 
         // call method
+        gc.heroEngagesFight("attack", myHero);
         gc.evaluateFight(myEnemy, myHero);
 
         // check if enemy is dead && check if heal to max && ...
@@ -199,6 +203,7 @@ public class EvaluateFightTest {
 
         // call method with unknown Stance
         try {
+            gc.heroEngagesFight("attack", myHero);
             gc.evaluateFight(myEnemy, null);
             Assert.fail();
         } catch (NullPointerException e) {
@@ -218,6 +223,7 @@ public class EvaluateFightTest {
 
         // call method with unknown Stance
         try {
+            gc.heroEngagesFight("attack", myHero);
             gc.evaluateFight(null, myHero);
             Assert.fail();
         } catch (NullPointerException e) {

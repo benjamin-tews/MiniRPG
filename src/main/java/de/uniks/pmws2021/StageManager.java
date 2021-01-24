@@ -14,7 +14,7 @@ public class StageManager extends Application {
     private static Stage stage;
     private static DungeonScreenController dungeonCtrl;
     private static HeroScreenController heroCtrl;
-    private static RPGEditor rpgEditor;
+    private static RPGEditor rpgEditor = new RPGEditor();
 
     public static void showHeroScreen() {
         cleanup();
@@ -25,7 +25,7 @@ public class StageManager extends Application {
             Scene scene = new Scene(root);
 
             // editor
-            rpgEditor = new RPGEditor();
+            //rpgEditor = new RPGEditor();
 
             // init controller
             heroCtrl = new HeroScreenController(root, rpgEditor);
@@ -44,7 +44,6 @@ public class StageManager extends Application {
 
     public static void showDungeonScreen() {
         cleanup();
-
 
         // show dungeon screen
         // load view

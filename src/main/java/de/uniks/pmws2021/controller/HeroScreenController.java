@@ -79,12 +79,9 @@ public class HeroScreenController {
 
         startCoinsLabel.setText(String.valueOf(editor.getStartCoins()));
 
-        // add some heroes
-        this.editor.haveHero("init hero1", "hc");
-        this.editor.haveHero("init hero 2", "hc");
         initHeroListSubController();
 
-        /*  OLD LIST VIEW - Mabe implement later
+        /*  OLD LIST VIEW - Maybe implement later
 
         //ListView
         listView = (ListView) view.lookup("#listView");

@@ -5,6 +5,9 @@ import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
+import de.uniks.pmws2021.model.Dungeon;
+import de.uniks.pmws2021.model.Enemy;
+import de.uniks.pmws2021.model.Hero;
 import de.uniks.pmws2021.model.HeroStat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -13,10 +16,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class DungeonScreenController {
+
+    private PropertyChangeListener onCoinsChange = this::onCoinsChange;;
 
     private Parent view;
     private RPGEditor editor;
@@ -67,6 +74,14 @@ public class DungeonScreenController {
         initHeroViewSubController();
         initEnemyViewSubController();
         initHeroStatViewSubController();
+
+        // PCL
+        this.editor.getDungeon().getHero().addPropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChange);
+
+    }
+
+    private void onCoinsChange(PropertyChangeEvent event) {
+        heroCoinsLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getCoins()));
     }
 
 
@@ -91,6 +106,9 @@ public class DungeonScreenController {
             heroStatViewController.stop();
         }
 
+        // remove PCL
+        this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChange);
+
     }
 
 
@@ -99,15 +117,15 @@ public class DungeonScreenController {
     // ===========================================================================================
 
     private void attackButtonClick(ActionEvent actionEvent) {
+        this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
         this.editor.heroEngagesFight("attack", this.editor.getDungeon().getHero());
-        initHeroViewSubController();
-        initEnemyViewSubController();
+
     }
 
     private void defenseButtonClick(ActionEvent actionEvent) {
+        //ToDo fix EvaluateFight Method
+        this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
         this.editor.heroEngagesFight("defend", this.editor.getDungeon().getHero());
-        initHeroViewSubController();
-        initEnemyViewSubController();
     }
 
     private void exitButtonOnClick(ActionEvent actionEvent) {

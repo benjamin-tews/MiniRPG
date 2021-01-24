@@ -1,7 +1,5 @@
 package de.uniks.pmws2021.controller.subcontroller;
 
-import de.uniks.pmws2021.StageManager;
-import de.uniks.pmws2021.controller.DungeonScreenController;
 import de.uniks.pmws2021.model.HeroStat;
 import de.uniks.pmws2021.RPGEditor;
 import javafx.event.ActionEvent;
@@ -10,10 +8,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 
 public class HeroStatViewSubController {
 
+    private PropertyChangeListener valueListener = this::onValueChange;
+    private PropertyChangeListener levelListener = this::onLevelChange;
+    private PropertyChangeListener costListener = this::onLevelChange;
+
     private RPGEditor editor;
+
     private Parent view;
     private HeroStat model;
     private Label levelLabel;
@@ -24,7 +30,6 @@ public class HeroStatViewSubController {
     // ===========================================================================================
     // Controller
     // ===========================================================================================
-
     public HeroStatViewSubController(HeroStat model, Parent view, RPGEditor editor) {
         this.model = model;
         this.view = view;
@@ -46,10 +51,29 @@ public class HeroStatViewSubController {
         valueLabel.setText(String.valueOf(this.model.getValue()));
         costLabel.setText(String.valueOf(this.model.getCost()));
 
+        // PCL
+        this.model.addPropertyChangeListener(HeroStat.PROPERTY_VALUE, this.levelListener);
+        this.model.addPropertyChangeListener(HeroStat.PROPERTY_VALUE, this.valueListener);
+        this.model.addPropertyChangeListener(HeroStat.PROPERTY_VALUE, this.costListener);
+
+    }
+
+    private void onLevelChange(PropertyChangeEvent event) {
+        levelLabel.setText(String.valueOf(this.model.getLevel()));
+    }
+
+    private void onValueChange(PropertyChangeEvent event) {
+        valueLabel.setText(String.valueOf(this.model.getValue()));
+    }
+
+    private void onCostChange(PropertyChangeEvent event) {
+        costLabel.setText(String.valueOf(this.model.getCost()));
     }
 
     public void stop() {
-        statUpgradeButton.setOnAction(null);
+        this.statUpgradeButton.setOnAction(null);
+        // remove PCL
+        this.model.removePropertyChangeListener(HeroStat.PROPERTY_VALUE, this.valueListener);
     }
 
 
@@ -65,8 +89,7 @@ public class HeroStatViewSubController {
             fail.showAndWait();
         } else {
             this.editor.heroStatUpdate(this.model);
-            StageManager.showDungeonScreen();
-            this.init();
+            //StageManager.showDungeonScreen();
         }
     }
 

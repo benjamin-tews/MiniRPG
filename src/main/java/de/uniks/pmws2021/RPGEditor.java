@@ -13,6 +13,8 @@ public class RPGEditor {
     final static int UPGRADE_COST = 5;
     final static int START_COINS = 50;
     final static double UPGRADE_FACTOR = 1.1;
+    String attack = "attack";
+    String defend = "defend";
 
     private Dungeon dungeon;
     private ArrayList<Hero> heroes = new ArrayList<>();
@@ -33,7 +35,7 @@ public class RPGEditor {
         // create hero and heroStat with initial and given values
         Hero hero = new Hero();
         hero.setName(heroName).setMode(hardMode);
-        hero.setLp(100);
+        hero.setLp(MAX_LIFE);
         // add hero to heroes list (This is important for saving heroes later)
         heroes.add(hero);
         return hero;
@@ -135,13 +137,17 @@ public class RPGEditor {
     public void enterDungeon(Hero hero) {
         // Put in your code
         // Use the have<Entity>() Method from above instead of new <Entity>()
-        // ToDo: implement random stance later
+        // ToDo: implement random stance later      //DONE
+
+        Enemy shinigami = haveEnemy("Shinigami", 30, 10, 20, 5, "attack");
+        hero.setAttacking(shinigami);
 
         // ToDo: initial stats from input fields in hero screen
         hero.withStats(getStartAttackStats(), getStartDefenseStats());
         hero.setCoins(START_COINS);
-        haveDungeon("The Fire Pits", hero, haveEnemy("Shinigami", 30, 5, 20, 7, "attack"));
-        hero.setAttacking(getDungeon().getEnemy().get(0));
+        shinigami.setAttacking(hero);
+        haveDungeon("The Fire Pits", hero, shinigami);
+
     }
 
     public void heroStatUpdate(HeroStat heroStat) {
@@ -165,8 +171,6 @@ public class RPGEditor {
 
     public void heroEngagesFight(String heroStance, Hero hero) {
         // Put in your code
-        String attack = Stances.stances[0];
-        String defend = Stances.stances[1];
 
         // create random Stance of stances array ... 0 or 1
         Random random = new Random();
@@ -184,7 +188,7 @@ public class RPGEditor {
         }
 
         // both attack
-        if (heroStance == attack && hero.getAttacking().getStance() == attack) {
+        if (heroStance.equals(attack) && hero.getAttacking().getStance().equals(attack)) {
 
             // set heros life
             if ((hero.getLp() - hero.getAttacking().getAtk()) <= 0) {
@@ -206,7 +210,7 @@ public class RPGEditor {
         }
 
         //  hero attacks and enemy defends
-        else if (heroStance == attack && hero.getAttacking().getStance() == defend) {
+        else if (heroStance.equals(attack) && hero.getAttacking().getStance().equals(defend)) {
             // take first object of AttackStat and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof AttackStat).findFirst();
             HeroStat attackingStat = firstHeroStat.get();
@@ -224,7 +228,7 @@ public class RPGEditor {
         }
 
         // hero defends and enemy attacks
-        else if (heroStance == defend && hero.getAttacking().getStance() == attack) {
+        else if (heroStance.equals(defend) && hero.getAttacking().getStance().equals(attack)) {
             // take first object of DefenseStats and create local object
             Optional<HeroStat> firstHeroStat = hero.getStats().stream().filter(heroStat -> heroStat instanceof DefenseStat).findFirst();
             HeroStat defenceStat = firstHeroStat.get();
@@ -245,7 +249,7 @@ public class RPGEditor {
         }
 
         // both defend
-        else if (heroStance == defend && hero.getAttacking().getStance() == defend) {
+        else if (heroStance.equals(defend) && hero.getAttacking().getStance().equals(defend)) {
             // take first object of DefenseStats and create local object
             // set hero lp
             hero.setLp(hero.getLp());
@@ -253,14 +257,14 @@ public class RPGEditor {
             hero.getAttacking().setLp(hero.getAttacking().getLp());
         }
 
-        // set random stance to enemy
-        hero.getAttacking().setStance(rndStance);
-
     }
 
 
     public void evaluateFight(Enemy enemy, Hero hero) {
         // Put in your code
+
+        attack = Stances.stances[0];
+        defend = Stances.stances[1];
 
         // create random Stance of stances array ... 0 or 1
         Random random = new Random();
@@ -276,20 +280,19 @@ public class RPGEditor {
         }
 
         /* whole new implementation was necessary cause of wrong task assumptions */
-        // initial fight round
-        heroEngagesFight("attack", hero);
 
         // if enemy died in fight and hero still lives ...
-        if ((enemy.getLp() == 0) & (hero.getLp() > 0)) {
+        if ((enemy.getLp() == 0) && (hero.getLp() > 0)) {
             // hero gets its coins
             hero.setCoins(hero.getCoins() + enemy.getCoins());
+            //StageManager.showHeroScreen();
         } else {
             // enemy still alive: set enemy random stance
             enemy.setStance(rndStance);
         }
 
         // if died enemy got next enemy and hero s still alive
-        while ((enemy.getLp() == 0) & (enemy.getNext() != null) & (hero.getLp() > 0)) {
+        while ((enemy.getLp() == 0) && (enemy.getNext() != null) && (hero.getLp() > 0)) {
             Enemy nextEnemy;
             nextEnemy = enemy.getNext();
             // remove dead enemy and its links
@@ -300,20 +303,23 @@ public class RPGEditor {
             hero.setAttacking(enemy);
             // fight against next enemy
             heroEngagesFight("attack", hero);
+
             if (enemy.getLp() == 0) {
                 // hero gets its coins
                 hero.setCoins(hero.getCoins() + enemy.getCoins());
+               // StageManager.showHeroScreen();
             } else {
                 // enemy still alive: set enemy random stance
                 enemy.setStance(rndStance);
             }
         }
 
-        // at the end of round
+/*
+        // ToDo at the end of round ... load hero screen
         hero.setAttacking(null);
         hero.getDungeon().withoutEnemy(enemy);
         hero.setLp(MAX_LIFE);
-
+*/
     }
 
 }
