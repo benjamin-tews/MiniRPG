@@ -1,8 +1,12 @@
 package de.uniks.pmws2021.controller.subcontroller;
 
+import de.uniks.pmws2021.StageManager;
+import de.uniks.pmws2021.controller.DungeonScreenController;
 import de.uniks.pmws2021.model.HeroStat;
 import de.uniks.pmws2021.RPGEditor;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
@@ -35,10 +39,9 @@ public class HeroStatViewSubController {
         statUpgradeButton = (Button) view.lookup("#StatUpgradeButton");
 
         // Add mouse actions
-
+        statUpgradeButton.setOnAction(this::statUpgradeButtonAction);
 
         // Init view with model
-        //attackLevelLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getStats().get(0).getLevel()));
         levelLabel.setText(String.valueOf(this.model.getLevel()));
         valueLabel.setText(String.valueOf(this.model.getValue()));
         costLabel.setText(String.valueOf(this.model.getCost()));
@@ -46,11 +49,25 @@ public class HeroStatViewSubController {
     }
 
     public void stop() {
+        statUpgradeButton.setOnAction(null);
     }
+
 
     // ===========================================================================================
     // Button Action Methods
     // ===========================================================================================
 
+    private void statUpgradeButtonAction(ActionEvent actionEvent) {
+        if (this.model.getCost() > this.editor.getDungeon().getHero().getCoins()) {
+            Alert fail = new Alert(Alert.AlertType.WARNING);
+            fail.setHeaderText("Empty Wallet");
+            fail.setContentText("Please earn more money!");
+            fail.showAndWait();
+        } else {
+            this.editor.heroStatUpdate(this.model);
+            StageManager.showDungeonScreen();
+            this.init();
+        }
+    }
 
 }

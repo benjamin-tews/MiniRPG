@@ -30,7 +30,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="50.0">
                            <children>
-                              <Button mnemonicParsing="false">
+                              <Button id="AttackButton" mnemonicParsing="false">
                                  <graphic>
                                     <ImageView fitHeight="40.0" fitWidth="40.0">
                                        <image>
@@ -39,7 +39,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button mnemonicParsing="false">
+                              <Button id="DefenseButton" mnemonicParsing="false">
                                  <graphic>
                                     <ImageView fitHeight="40.0" fitWidth="40.0">
                                        <image>

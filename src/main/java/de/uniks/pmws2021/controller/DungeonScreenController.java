@@ -1,15 +1,13 @@
 package de.uniks.pmws2021.controller;
 
-import com.sun.glass.ui.Clipboard;
 import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
-import de.uniks.pmws2021.model.*;
+import de.uniks.pmws2021.model.HeroStat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,6 +30,8 @@ public class DungeonScreenController {
     private Label dungeonNameLabel;
     private VBox heroStatSubView;
     private Label heroCoinsLabel;
+    private Button attackButton;
+    private Button defenseButton;
 
     public DungeonScreenController(Parent view, RPGEditor editor) {
         this.view = view;
@@ -50,10 +50,14 @@ public class DungeonScreenController {
         dungeonNameLabel = (Label) view.lookup("#DungeonNameLabel");
         heroStatSubView = (VBox) view.lookup("#HeroStatSubView");
         heroCoinsLabel = (Label) view.lookup("#HeroCoinsLabel");
+        attackButton = (Button) view.lookup("#AttackButton");
+        defenseButton = (Button) view.lookup("#DefenseButton");
 
         // Add action listeners
         exitButton.setOnAction(this::exitButtonOnClick);
         resetButton.setOnAction(this::resetButtonOnClick);
+        attackButton.setOnAction(this::attackButtonClick);
+        defenseButton.setOnAction(this::defenseButtonClick);
 
         // init Views
         dungeonNameLabel.setText(this.editor.getDungeonName());
@@ -89,9 +93,22 @@ public class DungeonScreenController {
 
     }
 
+
     // ===========================================================================================
     // Button Action Methods
     // ===========================================================================================
+
+    private void attackButtonClick(ActionEvent actionEvent) {
+        this.editor.heroEngagesFight("attack", this.editor.getDungeon().getHero());
+        initHeroViewSubController();
+        initEnemyViewSubController();
+    }
+
+    private void defenseButtonClick(ActionEvent actionEvent) {
+        this.editor.heroEngagesFight("defend", this.editor.getDungeon().getHero());
+        initHeroViewSubController();
+        initEnemyViewSubController();
+    }
 
     private void exitButtonOnClick(ActionEvent actionEvent) {
         StageManager.showHeroScreen();

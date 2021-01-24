@@ -10,8 +10,8 @@ public class RPGEditor {
 
 
     final static int MAX_LIFE = 100;
-    final static int UPGRADE_COST = 50;
-    final static int START_COINS = 20;
+    final static int UPGRADE_COST = 5;
+    final static int START_COINS = 50;
     final static double UPGRADE_FACTOR = 1.1;
 
     private Dungeon dungeon;
@@ -68,14 +68,14 @@ public class RPGEditor {
     // start values defaults attack
     public AttackStat getStartAttackStats() {
         AttackStat startAttackStat = new AttackStat();
-        startAttackStat.setLevel(1).setValue(11).setCost(5);
+        startAttackStat.setLevel(1).setValue(10).setCost(5);
         return startAttackStat;
     }
     // start values defaults defense
 
     public DefenseStat getStartDefenseStats() {
         DefenseStat startDefenseStat = new DefenseStat();
-        startDefenseStat.setLevel(1).setValue(22).setCost(5);
+        startDefenseStat.setLevel(1).setValue(10).setCost(5);
         return startDefenseStat;
     }
     // ===========================================================================================
@@ -140,8 +140,8 @@ public class RPGEditor {
         // ToDo: initial stats from input fields in hero screen
         hero.withStats(getStartAttackStats(), getStartDefenseStats());
         hero.setCoins(START_COINS);
-
-        haveDungeon("The Fire Pits", hero, haveEnemy("Shinigami", 30, 5, 5, 7, "attack"));
+        haveDungeon("The Fire Pits", hero, haveEnemy("Shinigami", 30, 5, 20, 7, "attack"));
+        hero.setAttacking(getDungeon().getEnemy().get(0));
     }
 
     public void heroStatUpdate(HeroStat heroStat) {
@@ -154,7 +154,7 @@ public class RPGEditor {
             throw new NullPointerException("empty stats - doh!");
         }
 
-        if (heroStat.getHero().getCoins() - UPGRADE_COST <= 0) {
+        if (heroStat.getHero().getCoins() - UPGRADE_COST < 0) {
             throw new RuntimeException("Too less coins in wallet - no Upgrade possible!");
         } else {
             heroStat.getHero().setCoins(heroStat.getHero().getCoins() - UPGRADE_COST);
@@ -167,6 +167,10 @@ public class RPGEditor {
         // Put in your code
         String attack = Stances.stances[0];
         String defend = Stances.stances[1];
+
+        // create random Stance of stances array ... 0 or 1
+        Random random = new Random();
+        String rndStance = Stances.stances[random.nextInt(Stances.stances.length)];
 
         // hero is null
         if (hero == null) {
@@ -237,6 +241,7 @@ public class RPGEditor {
             } else {
                 hero.setLp(hero.getLp() - damage);
             }
+
         }
 
         // both defend
@@ -247,6 +252,9 @@ public class RPGEditor {
             // set enemy lp
             hero.getAttacking().setLp(hero.getAttacking().getLp());
         }
+
+        // set random stance to enemy
+        hero.getAttacking().setStance(rndStance);
 
     }
 
