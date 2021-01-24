@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -18,7 +17,6 @@ public class HeroViewSubController {
     private RPGEditor editor;
     private Parent view;
     private Hero model;
-    ;
     private PropertyChangeListener onAttackingChanged = this::OnAttackingChanged;
     private Label heroNameLabel;
     private Label heroLpLabel;

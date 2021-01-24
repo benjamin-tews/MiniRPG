@@ -5,8 +5,6 @@ import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
-import de.uniks.pmws2021.model.Dungeon;
-import de.uniks.pmws2021.model.Enemy;
 import de.uniks.pmws2021.model.Hero;
 import de.uniks.pmws2021.model.HeroStat;
 import javafx.event.ActionEvent;
@@ -117,15 +115,14 @@ public class DungeonScreenController {
     // ===========================================================================================
 
     private void attackButtonClick(ActionEvent actionEvent) {
-        this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
         this.editor.heroEngagesFight("attack", this.editor.getDungeon().getHero());
-
+        this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
     }
 
     private void defenseButtonClick(ActionEvent actionEvent) {
         //ToDo fix EvaluateFight Method
-        this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
         this.editor.heroEngagesFight("defend", this.editor.getDungeon().getHero());
+        this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
     }
 
     private void exitButtonOnClick(ActionEvent actionEvent) {

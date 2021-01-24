@@ -1,7 +1,6 @@
 package de.uniks.pmws2021;
 
 import de.uniks.pmws2021.model.Hero;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
