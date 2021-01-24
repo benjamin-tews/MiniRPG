@@ -71,9 +71,12 @@ public class HeroStatViewSubController {
     }
 
     public void stop() {
+        // remove actions
         this.statUpgradeButton.setOnAction(null);
         // remove PCL
+        this.model.removePropertyChangeListener(HeroStat.PROPERTY_VALUE, this.levelListener);
         this.model.removePropertyChangeListener(HeroStat.PROPERTY_VALUE, this.valueListener);
+        this.model.removePropertyChangeListener(HeroStat.PROPERTY_VALUE, this.costListener);
     }
 
 

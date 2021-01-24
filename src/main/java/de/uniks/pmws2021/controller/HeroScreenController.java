@@ -8,21 +8,16 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
-import java.io.File;
+import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class HeroScreenController {
-    //ToDo: Fix Pathname
-    //File myImage = new File("C:\\Users\\Shrabbit\\UNI\\Programmierung und Modellierung 2021\\pmws2021-minirpg-benjamin-tews\\src\\main\\resources\\de\\uniks\\pmws2021\\img\\skull.png");
-    //private Image skull = new Image(myImage.toURI().toString());
     private Parent view;
     private RPGEditor editor;
     private Button createStartButton;
@@ -33,7 +28,6 @@ public class HeroScreenController {
     private CheckBox hardModeCheckBox;
     private VBox heroListVbox;
     private ArrayList<HeroSubListController> heroSubListControllerList;
-    private Button refreshButton;
     private Label startAttackLevelLabel;
     private Label startAttackValueLabel;
     private Label startAttackCostLabel;
@@ -114,6 +108,7 @@ public class HeroScreenController {
             }
         });
         */
+
     }
 
     public void stop() {
@@ -160,6 +155,7 @@ public class HeroScreenController {
         for (Hero hero : editor.getHeroes()
         ) {
             //Parent heroSubListView = null;
+            // ToDo schow actual coins in hero list
             try {
                 Parent heroSubListView = FXMLLoader.load(StageManager.class.getResource("subview/HeroSubListView.fxml"));
 

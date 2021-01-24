@@ -5,11 +5,13 @@ import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
+import de.uniks.pmws2021.model.Enemy;
 import de.uniks.pmws2021.model.Hero;
 import de.uniks.pmws2021.model.HeroStat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -21,7 +23,8 @@ import java.util.ArrayList;
 
 public class DungeonScreenController {
 
-    private PropertyChangeListener onCoinsChange = this::onCoinsChange;;
+    private PropertyChangeListener onCoinsChanged = this::onCoinsChanged;
+    private PropertyChangeListener onLpChanged = this::onLpChanged;
 
     private Parent view;
     private RPGEditor editor;
@@ -74,12 +77,24 @@ public class DungeonScreenController {
         initHeroStatViewSubController();
 
         // PCL
-        this.editor.getDungeon().getHero().addPropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChange);
+        this.editor.getDungeon().getHero().addPropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChanged);
+        this.editor.getDungeon().getHero().getAttacking().addPropertyChangeListener(Enemy.PROPERTY_LP, onLpChanged);
 
     }
 
-    private void onCoinsChange(PropertyChangeEvent event) {
+    private void onCoinsChanged(PropertyChangeEvent event) {
         heroCoinsLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getCoins()));
+    }
+
+    private void onLpChanged(PropertyChangeEvent event) {
+        if (this.editor.getDungeon().getHero().getAttacking().getLp() == 0) {
+            this.editor.evaluateFight(this.editor.getDungeon().getHero().getAttacking(), this.editor.getDungeon().getHero());
+            Alert fail = new Alert(Alert.AlertType.INFORMATION);
+            fail.setHeaderText("Dungeon clear!");
+            fail.setContentText("Return to main Menu");
+            fail.showAndWait();
+            StageManager.showHeroScreen();
+        }
     }
 
 
@@ -105,7 +120,8 @@ public class DungeonScreenController {
         }
 
         // remove PCL
-        this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChange);
+        this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChanged);
+        this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
 
     }
 

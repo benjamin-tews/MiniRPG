@@ -65,7 +65,6 @@ public class HeroViewSubController {
     }
 
     private void OnAttackingChanged(PropertyChangeEvent event) {
-        // ToDo Fix attacking attributes
         this.editor.evaluateFight(this.model.getAttacking(), this.model);
     }
 
