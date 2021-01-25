@@ -142,11 +142,18 @@ public class RPGEditor {
         Enemy shinigami = haveEnemy("Shinigami", 30, 10, 20, 5, "attack");
         hero.setAttacking(shinigami);
 
+        Enemy shinigami2 = haveEnemy("Bad Shini", 50, 10, 10, 5, "defend");
+
+        Enemy shinigami3 = haveEnemy("Evil Shini", 50, 20, 10, 5, "defend");
+
+        shinigami.setNext(shinigami2);
+        shinigami2.setNext(shinigami3);
+
         // ToDo: initial stats from input fields in hero screen
         hero.withStats(getStartAttackStats(), getStartDefenseStats());
         hero.setCoins(START_COINS);
         shinigami.setAttacking(hero);
-        haveDungeon("The Fire Pits", hero, shinigami);
+        haveDungeon("The Fire Pits", hero, shinigami,shinigami2, shinigami3);
 
     }
 
@@ -160,10 +167,10 @@ public class RPGEditor {
             throw new NullPointerException("empty stats - doh!");
         }
 
-        if (heroStat.getHero().getCoins() - UPGRADE_COST < 0) {
+        if (heroStat.getHero().getCoins() - heroStat.getCost() < 0) {
             throw new RuntimeException("Too less coins in wallet - no Upgrade possible!");
         } else {
-            heroStat.getHero().setCoins(heroStat.getHero().getCoins() - UPGRADE_COST);
+            heroStat.getHero().setCoins(heroStat.getHero().getCoins() - heroStat.getCost());
             heroStat.setLevel(heroStat.getLevel() + 1);
             heroStat.setValue((int) ((heroStat.getValue()) * UPGRADE_FACTOR)).setCost((int) ((heroStat.getCost()) * UPGRADE_FACTOR));
         }
@@ -262,7 +269,6 @@ public class RPGEditor {
 
     public void evaluateFight(Enemy enemy, Hero hero) {
         // Put in your code
-
         attack = Stances.stances[0];
         defend = Stances.stances[1];
 
@@ -285,33 +291,24 @@ public class RPGEditor {
         if ((enemy.getLp() == 0) && (hero.getLp() > 0)) {
             // hero gets its coins
             hero.setCoins(hero.getCoins() + enemy.getCoins());
-            //StageManager.showHeroScreen();
+            hero.setLp(MAX_LIFE);
+            if ((enemy.getNext() != null)) {
+                Enemy nextEnemy;
+                nextEnemy = enemy.getNext();
+                // remove dead enemy and its links
+                enemy.setNext(null);
+                // remove enemy from dungeon
+                hero.getDungeon().withoutEnemy(enemy);
+                // set enemy to next enemy
+                enemy = nextEnemy;
+                hero.setAttacking(enemy);
+            } else {
+                // remove enemy from dungeon
+                hero.getDungeon().withoutEnemy(enemy);
+            }
         } else {
             // enemy still alive: set enemy random stance
             enemy.setStance(rndStance);
-        }
-
-        // if died enemy got next enemy and hero s still alive
-        while ((enemy.getLp() == 0) && (enemy.getNext() != null) && (hero.getLp() > 0)) {
-            Enemy nextEnemy;
-            nextEnemy = enemy.getNext();
-            // remove dead enemy and its links
-            enemy.setNext(null);
-            hero.getDungeon().withoutEnemy(enemy);
-            // set enemy to next enemy
-            enemy = nextEnemy;
-            hero.setAttacking(enemy);
-            // fight against next enemy
-            heroEngagesFight("attack", hero);
-
-            if (enemy.getLp() == 0) {
-                // hero gets its coins
-                hero.setCoins(hero.getCoins() + enemy.getCoins());
-               // StageManager.showHeroScreen();
-            } else {
-                // enemy still alive: set enemy random stance
-                enemy.setStance(rndStance);
-            }
         }
 
 /*

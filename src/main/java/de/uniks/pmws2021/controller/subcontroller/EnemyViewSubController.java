@@ -41,7 +41,6 @@ public class EnemyViewSubController {
         this.model = model;
         this.view = view;
         this.editor = editor;
-        this.maxLife = model.getLp();
     }
 
     public void init() {
@@ -55,6 +54,7 @@ public class EnemyViewSubController {
 
         // Init view with model
         enemyNameLabel.setText(model.getName());
+        this.maxLife = model.getLp();
 
         enemyLpLabel.setText(String.valueOf(model.getLp()) + "/" + String.valueOf(maxLife));
         if (model.getStance().equals("attack")) {
@@ -74,6 +74,12 @@ public class EnemyViewSubController {
 
     private void onLpChanged(PropertyChangeEvent event) {
         enemyLpLabel.setText(String.valueOf(model.getLp()) + "/" + String.valueOf(maxLife));
+        if (model.getLp() == 0 && model.getNext() != null) {
+            this.model = this.model.getNext();
+            enemyNameLabel.setText(this.model.getName());
+            enemyStancePane.getChildren().clear();
+            this.init();
+        }
     }
 
     private void onStanceChanged(PropertyChangeEvent event) {

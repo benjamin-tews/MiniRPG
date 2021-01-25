@@ -30,7 +30,7 @@ public class HeroStatUpdateTest {
 
         //level number increased (and so stats, cost), number of coins decreased
         Assert.assertEquals(2, attackStats.getLevel());
-        Assert.assertEquals(200, myHero.getCoins());
+        Assert.assertEquals(240, myHero.getCoins());
         Assert.assertTrue(attackStats.getCost() > 10 && attackStats.getValue() > 10);
     }
 
@@ -41,7 +41,7 @@ public class HeroStatUpdateTest {
         HeroStat attackStats = new AttackStat();
         HeroStat defenceStats = new DefenseStat();
         attackStats.setLevel(1).setValue(10).setCost(5);
-        defenceStats.setLevel(2).setValue(20).setCost(10);
+        defenceStats.setLevel(2).setValue(20).setCost(30);
 
         //create Hero with stats and coins and so ...
         Hero myHero = new Hero();
