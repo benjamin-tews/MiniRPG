@@ -1,12 +1,14 @@
 package de.uniks.pmws2021.controller.subcontroller;
 
-import de.uniks.pmws2021.model.Hero;
 import de.uniks.pmws2021.RPGEditor;
+import de.uniks.pmws2021.model.Enemy;
+import de.uniks.pmws2021.model.Hero;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -14,13 +16,15 @@ import java.io.File;
 
 public class HeroViewSubController {
 
+    private PropertyChangeListener onAttackingEnemyNameChanged = this::onAttackingEnemyNameChanged;
+    private PropertyChangeListener onAttackingChanged = this::OnAttackingChanged;
+    private PropertyChangeListener onLpChanged = this::OnLpChanged;
+
     private RPGEditor editor;
     private Parent view;
     private Hero model;
-    private PropertyChangeListener onAttackingChanged = this::OnAttackingChanged;
     private Label heroNameLabel;
     private Label heroLpLabel;
-    private PropertyChangeListener onLpChanged = this::OnLpChanged;
     private Label dungeonNameLabel;
     private Label enemyNameLabel;
     private Pane hardmodeImagePane;
@@ -57,20 +61,27 @@ public class HeroViewSubController {
         // PCL
         this.model.addPropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
         this.model.addPropertyChangeListener(Hero.PROPERTY_ATTACKING, onAttackingChanged);
+        this.model.getAttacking().addPropertyChangeListener(Enemy.PROPERTY_NAME, onAttackingEnemyNameChanged);
 
     }
 
-    private void OnLpChanged(PropertyChangeEvent event) {
+    public void OnLpChanged(PropertyChangeEvent event) {
+        //ToDo make "100" dynamic
         heroLpLabel.setText(String.valueOf(this.model.getLp()) + "/" + "100");
     }
 
-    private void OnAttackingChanged(PropertyChangeEvent event) {
-        this.editor.evaluateFight(this.model.getAttacking(), this.model);
+    public void OnAttackingChanged(PropertyChangeEvent event) {
+
+    }
+
+    public void onAttackingEnemyNameChanged(PropertyChangeEvent event) {
+
     }
 
     public void stop() {
         this.model.removePropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
         this.model.removePropertyChangeListener(Hero.PROPERTY_ATTACKING, onAttackingChanged);
+        this.model.getAttacking().removePropertyChangeListener(Enemy.PROPERTY_NAME, onAttackingEnemyNameChanged);
     }
 
     // ===========================================================================================

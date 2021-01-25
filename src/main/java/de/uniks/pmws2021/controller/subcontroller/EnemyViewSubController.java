@@ -72,7 +72,7 @@ public class EnemyViewSubController {
 
     }
 
-    private void onLpChanged(PropertyChangeEvent event) {
+    public void onLpChanged(PropertyChangeEvent event) {
         enemyLpLabel.setText(String.valueOf(model.getLp()) + "/" + String.valueOf(maxLife));
         if (model.getLp() == 0 && model.getNext() != null) {
             this.model = this.model.getNext();
@@ -82,7 +82,7 @@ public class EnemyViewSubController {
         }
     }
 
-    private void onStanceChanged(PropertyChangeEvent event) {
+    public void onStanceChanged(PropertyChangeEvent event) {
         if (model.getStance().equals("attack")) {
             enemyStancePane.getChildren().set(0,attackImageView);
         } else if (model.getStance().equals("defend")) {

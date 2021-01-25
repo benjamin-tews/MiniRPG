@@ -59,7 +59,7 @@ public class HeroScreenController {
 
         startCoinsLabel = (Label) view.lookup("#StartCoinsLabel");
 
-        // Add action listeners
+        // on  mouse action
         createStartButton.setOnAction(this::createStartButtonOnClick);
         exitButton.setOnAction(this::exitButtonOnClick);
 

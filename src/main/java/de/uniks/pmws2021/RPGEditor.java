@@ -225,7 +225,7 @@ public class RPGEditor {
             /* implementation error - fixed this if statement */
 
             // calculate incomming damage
-            int damage = (((attackingStat.getValue() - hero.getAttacking().getDef()) > 0) ? (attackingStat.getValue() - hero.getAttacking().getDef()) : 0);
+            int damage = (!((attackingStat.getValue() - hero.getAttacking().getDef()) <= 0) ? (attackingStat.getValue() - hero.getAttacking().getDef()) : 0);
 
             if ((hero.getAttacking().getLp() - (damage)) <= 0) {
                 hero.getAttacking().setLp(0);
@@ -243,7 +243,7 @@ public class RPGEditor {
             // set heroes lp
             /* implementation error: wrong lp calculation -> fixed it */
 
-            int damage = (((hero.getAttacking().getAtk() - defenceStat.getValue()) > 0) ? (hero.getAttacking().getAtk() - defenceStat.getValue()) : 0);
+            int damage = (!((hero.getAttacking().getAtk() - defenceStat.getValue()) <= 0) ? (hero.getAttacking().getAtk() - defenceStat.getValue()) : 0);
 
             if ((hero.getLp() - damage) <= 0) {
                 hero.setLp(0);
@@ -288,9 +288,10 @@ public class RPGEditor {
         /* whole new implementation was necessary cause of wrong task assumptions */
 
         // if enemy died in fight and hero still lives ...
-        if ((enemy.getLp() == 0) && (hero.getLp() > 0)) {
+        if ((enemy.getLp() <= 0) && (hero.getLp() > 0)) {
             // hero gets its coins
             hero.setCoins(hero.getCoins() + enemy.getCoins());
+            enemy.setCoins(0);
             hero.setLp(MAX_LIFE);
             if ((enemy.getNext() != null)) {
                 Enemy nextEnemy;
@@ -305,6 +306,7 @@ public class RPGEditor {
             } else {
                 // remove enemy from dungeon
                 hero.getDungeon().withoutEnemy(enemy);
+                enemy.setNext(null);
             }
         } else {
             // enemy still alive: set enemy random stance

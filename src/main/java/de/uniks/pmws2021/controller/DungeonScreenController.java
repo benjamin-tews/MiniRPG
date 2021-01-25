@@ -5,7 +5,6 @@ import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
-import de.uniks.pmws2021.model.Dungeon;
 import de.uniks.pmws2021.model.Enemy;
 import de.uniks.pmws2021.model.Hero;
 import de.uniks.pmws2021.model.HeroStat;
@@ -16,7 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -24,8 +22,9 @@ import java.util.ArrayList;
 
 public class DungeonScreenController {
 
-    private PropertyChangeListener onCoinsChanged = this::onCoinsChanged;
     private PropertyChangeListener onLpChanged = this::onLpChanged;
+    private PropertyChangeListener onNextEnemyChanged = this::onNextEnemyChanged;;
+    private PropertyChangeListener onCoinsChanged = this::onCoinsChanged;
 
     private Parent view;
     private RPGEditor editor;
@@ -80,15 +79,21 @@ public class DungeonScreenController {
         // PCL
         this.editor.getDungeon().getHero().addPropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChanged);
         this.editor.getDungeon().getHero().getAttacking().addPropertyChangeListener(Enemy.PROPERTY_LP, onLpChanged);
+        this.editor.getDungeon().getHero().getAttacking().addPropertyChangeListener(Enemy.PROPERTY_NEXT, onNextEnemyChanged);
 
     }
 
-    private void onCoinsChanged(PropertyChangeEvent event) {
+    public void onNextEnemyChanged(PropertyChangeEvent event) {
+
+    }
+
+    public void onCoinsChanged(PropertyChangeEvent event) {
         heroCoinsLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getCoins()));
     }
 
 
-    private void onLpChanged(PropertyChangeEvent event) {
+    public void onLpChanged(PropertyChangeEvent event) {
+        //ToDo: extend if condition so it works properly
         if (event.getNewValue().equals(0) && this.editor.getDungeon().getEnemy().isEmpty()) {
             Alert info = new Alert(Alert.AlertType.INFORMATION);
             info.setHeaderText("Dungeon clear!");

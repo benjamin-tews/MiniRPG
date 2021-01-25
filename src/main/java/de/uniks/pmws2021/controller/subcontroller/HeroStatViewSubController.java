@@ -16,7 +16,7 @@ public class HeroStatViewSubController {
 
     private PropertyChangeListener valueListener = this::onValueChange;
     private PropertyChangeListener levelListener = this::onLevelChange;
-    private PropertyChangeListener costListener = this::onLevelChange;
+    private PropertyChangeListener costListener = this::onCostChange;
 
     private RPGEditor editor;
 
@@ -92,7 +92,6 @@ public class HeroStatViewSubController {
             fail.showAndWait();
         } else {
             this.editor.heroStatUpdate(this.model);
-            //StageManager.showDungeonScreen();
         }
     }
 
