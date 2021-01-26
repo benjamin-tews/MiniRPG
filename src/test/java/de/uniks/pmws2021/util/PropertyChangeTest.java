@@ -1,12 +1,22 @@
 package de.uniks.pmws2021.util;
 
+import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
+import de.uniks.pmws2021.model.Hero;
+import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.junit.Assert;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.util.WaitForAsyncUtils;
 
 public class PropertyChangeTest extends ApplicationTest {
-    private static Stage stage;
+    private Stage stage;
     private StageManager app;
 
     @Override
@@ -20,6 +30,49 @@ public class PropertyChangeTest extends ApplicationTest {
 
     @Test
     public void propertyChangeTest() {
-        // Add test here
+        //  DungeonScreen öffnen
+        Button createStartButton = lookup("#CreateStartButton").query();
+        TextField createHeroField = lookup("#CreateHeroField").query();
+        Assert.assertEquals("Enter Hero Name", createHeroField.getPromptText());
+        clickOn("#CreateHeroField").write("Batman");
+        Assert.assertEquals("Batman", createHeroField.getText());
+        CheckBox hardModeCheckbox = lookup("#HardModeCheckBox").query();
+        clickOn(hardModeCheckbox);
+        Assert.assertTrue(hardModeCheckbox.isSelected());
+        clickOn(createStartButton);
+        Label dungeonNameLabel = lookup("#DungeonNameLabel").query();
+        Assert.assertEquals("The Fire Pits", dungeonNameLabel.getText());
+        Assert.assertEquals("MiniRPG - Ingame", stage.getTitle());
+        Label enemyNameLabel = lookup("#EnemyNameLabel").query();
+        Assert.assertEquals("Shinigami", enemyNameLabel.getText());
+
+        //  2.  Prüfen, ob die View die initialen Daten anzeigt
+        Assert.assertEquals("attack", app.getModel().getDungeon().getEnemy().get(0).getStance());
+        Assert.assertEquals(3, app.getModel().getDungeon().getEnemy().stream().count());
+        Label enemyLpLabel = lookup("#EnemyLpLabel").query();
+        Assert.assertEquals("30/30", enemyLpLabel.getText());
+        Label heroCoinsLabel = lookup("#HeroCoinsLabel").query();
+        Label heroValueLabel = lookup("#ValueLabel").query();
+        Assert.assertEquals("50", heroCoinsLabel.getText());
+        Button attackButton = lookup("#AttackButton").query();
+
+        //  3.  Daten im Modell ändern, z.B. hero.setLp(...), hero.setAttacking(...), stat.setLevel(...)...
+        //  ...(Hier-durch werden die PropertyChangeEvents erzeugt)
+
+        Platform.runLater( () -> app.getModel().getDungeon().getHero().setCoins(100) );
+        WaitForAsyncUtils.waitForFxEvents();
+        Assert.assertEquals("100", heroCoinsLabel.getText());
+
+        Platform.runLater( () -> app.getModel().getDungeon().getHero().getStats().get(0).setValue(50) );
+        WaitForAsyncUtils.waitForFxEvents();
+        Platform.runLater( () -> app.getModel().getDungeon().getHero().getAttacking().setLp(100) );
+        WaitForAsyncUtils.waitForFxEvents();
+        clickOn(attackButton);
+        WaitForAsyncUtils.waitForFxEvents();
+
+        //  4.  Prüfen, ob die View die geänderten Daten anzeigt
+        Assert.assertEquals("50/30", enemyLpLabel.getText());
+        Assert.assertEquals("50", heroValueLabel.getText());
+
     }
 }

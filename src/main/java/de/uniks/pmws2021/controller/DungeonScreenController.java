@@ -144,6 +144,8 @@ public class DungeonScreenController {
         // remove PCL
         this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChanged);
         this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
+        this.editor.getDungeon().getHero().getAttacking().removePropertyChangeListener(Enemy.PROPERTY_NEXT, onNextEnemyChanged);
+        this.editor.getDungeon().removePropertyChangeListener(Dungeon.PROPERTY_ENEMY, onEnemyChanged);
 
     }
 
@@ -164,12 +166,14 @@ public class DungeonScreenController {
     }
 
     private void exitButtonOnClick(ActionEvent actionEvent) {
+        // save Hero and go Back to hero Screen
+        ResourceManager.saveHero(this.editor.getDungeon().getHero());
         StageManager.showHeroScreen();
     }
 
     private void resetButtonOnClick(ActionEvent actionEvent) {
-        // set all values to beginning and show DungeonScreen
-        ResourceManager.saveHero(this.editor.getDungeon().getHero());
+        // ToDo: set all values to beginning and show DungeonScreen
+
     }
 
     // ===========================================================================================

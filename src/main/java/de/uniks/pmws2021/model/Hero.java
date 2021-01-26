@@ -280,4 +280,5 @@ public class Hero
       this.setAttacking(null);
       this.withoutStats(new ArrayList<>(this.getStats()));
    }
+
 }

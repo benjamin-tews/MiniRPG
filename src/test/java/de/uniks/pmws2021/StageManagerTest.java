@@ -51,7 +51,7 @@ public class StageManagerTest extends ApplicationTest {
         Assert.assertEquals("Shinigami", enemyNameLabel.getText());
         // ToDo: make this one more dynamic
         Assert.assertEquals("attack", app.getModel().getDungeon().getEnemy().get(0).getStance());
-        Assert.assertEquals(1, app.getModel().getDungeon().getEnemy().stream().count());
+        Assert.assertEquals(3, app.getModel().getDungeon().getEnemy().stream().count());
         Label enemyLpLabel = lookup("#EnemyLpLabel").query();
         Assert.assertEquals("30/30", enemyLpLabel.getText());
         Label heroCoinsLabel = lookup("#HeroCoinsLabel").query();
