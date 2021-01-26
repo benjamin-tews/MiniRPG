@@ -43,7 +43,6 @@ public class DungeonScreenController {
     private Label heroCoinsLabel;
     private Button attackButton;
     private Button defenseButton;
-    private boolean nextEnemyNull;
     private long counter;
 
     public DungeonScreenController(Parent view, RPGEditor editor) {

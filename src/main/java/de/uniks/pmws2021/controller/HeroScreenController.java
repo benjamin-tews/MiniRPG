@@ -4,6 +4,7 @@ import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.HeroSubListController;
 import de.uniks.pmws2021.model.Hero;
+import de.uniks.pmws2021.util.ResourceManager;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class HeroScreenController {
@@ -72,6 +74,9 @@ public class HeroScreenController {
         startDefenseCostLabel.setText(String.valueOf(editor.getStartDefenseStats().getCost()));
 
         startCoinsLabel.setText(String.valueOf(editor.getStartCoins()));
+
+        List<Hero> heroList = ResourceManager.loadAllHeroes();
+        this.editor.setLoadedHeroes(heroList);
 
         initHeroListSubController();
 

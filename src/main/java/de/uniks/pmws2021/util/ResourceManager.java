@@ -36,12 +36,32 @@ public class ResourceManager {
     public static List<Hero> loadAllHeroes() {
         List<Hero> heroList = new ArrayList<>();
 
-        // try to read heroList from File 
-        // parse yaml-string to YamlIdMap
-        // decode map
-        // map the decoded yaml data to real java objects and return list of heros
+        // try to read heroList from File
+        String heroesString = null;
+        try {
+            heroesString = Files.readString(HERO_FILE);
+
+            // parse yaml-string to YamlIdMap
+            YamlIdMap yamlIdMap = new YamlIdMap(Hero.class.getPackageName());
+
+            // decode map
+            yamlIdMap.decode(heroesString);
+
+            // map the decoded yaml data to real java objects and return list of heros
+            for (Object object : yamlIdMap.getObjIdMap().values()
+            ) {
+                if (object instanceof  Hero) {
+                    heroList.add((Hero) object);
+                }
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return heroList;
+
     }
 
     public static void saveHero(Hero victor) {
@@ -52,10 +72,10 @@ public class ResourceManager {
             // load all existing heroes
             List<Hero> oldHeroes = loadAllHeroes();
 
-            // delete existing hero with the same name as the victor
+            // ToDo: delete existing hero with the same name as the victor
             //oldHeroes.removeIf(oldHeroes -> oldHeroes.getName().equals(victor));
 
-            // add copy of victor to list
+            // add copy of victor to list ToDo: save HeroStats
             oldHeroes.add(victor);
 
             // serialize as yaml
