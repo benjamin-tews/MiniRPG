@@ -41,6 +41,9 @@ dependencies {
 
 	testImplementation 'org.testfx:testfx-junit:4.0.16-alpha'
 
+	// https://mvnrepository.com/artifact/org.fulib/fulibYaml
+	implementation group: 'org.fulib', name: 'fulibYaml', version: '1.4.0'
+
 }
 
 	mainClassName = 'de.uniks.pmws2021.Launcher'

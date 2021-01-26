@@ -59,14 +59,6 @@ public class RPGEditor {
         return null;
     }
 
-    public String getHeroName() {
-        if (this.dungeon == null) {
-            return "Dungeon is null";
-        } else {
-            return this.dungeon.getHero().getName();
-        }
-    }
-
     // start values defaults attack
     public AttackStat getStartAttackStats() {
         AttackStat startAttackStat = new AttackStat();
@@ -140,20 +132,19 @@ public class RPGEditor {
         // ToDo: implement random stance later      //DONE
 
         Enemy shinigami = haveEnemy("Shinigami", 30, 10, 20, 5, "attack");
-        hero.setAttacking(shinigami);
 
         Enemy shinigami2 = haveEnemy("Bad Shini", 50, 10, 10, 5, "defend");
 
-        Enemy shinigami3 = haveEnemy("Evil Shini", 50, 20, 10, 5, "defend");
+        Enemy shinigami3 = haveEnemy("Evil Shini", 50, 20, 10, 0, "defend");
 
         shinigami.setNext(shinigami2);
         shinigami2.setNext(shinigami3);
 
-        // ToDo: initial stats from input fields in hero screen
+        // ToDo: initial stats from input fields in hero screen?!?
         hero.withStats(getStartAttackStats(), getStartDefenseStats());
         hero.setCoins(START_COINS);
         shinigami.setAttacking(hero);
-        haveDungeon("The Fire Pits", hero, shinigami,shinigami2, shinigami3);
+        haveDungeon("The Fire Pits", hero, shinigami, shinigami2, shinigami3);
 
     }
 
@@ -177,11 +168,6 @@ public class RPGEditor {
     }
 
     public void heroEngagesFight(String heroStance, Hero hero) {
-        // Put in your code
-
-        // create random Stance of stances array ... 0 or 1
-        Random random = new Random();
-        String rndStance = Stances.stances[random.nextInt(Stances.stances.length)];
 
         // hero is null
         if (hero == null) {
@@ -287,38 +273,44 @@ public class RPGEditor {
 
         /* whole new implementation was necessary cause of wrong task assumptions */
 
-        // if enemy died in fight and hero still lives ...
-        if ((enemy.getLp() <= 0) && (hero.getLp() > 0)) {
-            // hero gets its coins
-            hero.setCoins(hero.getCoins() + enemy.getCoins());
-            enemy.setCoins(0);
-            hero.setLp(MAX_LIFE);
-            if ((enemy.getNext() != null)) {
-                Enemy nextEnemy;
-                nextEnemy = enemy.getNext();
-                // remove dead enemy and its links
-                enemy.setNext(null);
-                // remove enemy from dungeon
+        if (hero.getMode().equals("normal")) {
+            // hero in normal mode
+            if ((enemy.getLp() == 0) && (hero.getLp() > 0)) {
+                // hero gets its coins
+                hero.setCoins(hero.getCoins() + enemy.getCoins());
+                enemy.setCoins(0);
+                hero.setLp(MAX_LIFE);
                 hero.getDungeon().withoutEnemy(enemy);
-                // set enemy to next enemy
-                enemy = nextEnemy;
-                hero.setAttacking(enemy);
+
+                if ((enemy.getNext() != null)) {
+                    hero.setAttacking(enemy.getNext());
+                }
+
             } else {
-                // remove enemy from dungeon
-                hero.getDungeon().withoutEnemy(enemy);
-                enemy.setNext(null);
+                // enemy still alive: set enemy random stance
+                enemy.setStance(rndStance);
             }
         } else {
-            // enemy still alive: set enemy random stance
-            enemy.setStance(rndStance);
+            // hero in hard mode
+            if ((enemy.getLp() == 0) && (hero.getLp() > 0)) {
+                // hero gets its coins
+                hero.setCoins(hero.getCoins() + enemy.getCoins());
+                enemy.setCoins(0);
+                hero.getDungeon().withoutEnemy(enemy);
+
+                if ((enemy.getNext() != null)) {
+                    hero.setAttacking(enemy.getNext());
+                } else {
+                    // set to max only if no more enemy follows
+                    hero.setLp(MAX_LIFE);
+                }
+
+            } else {
+                // enemy still alive: set enemy random stance
+                enemy.setStance(rndStance);
+            }
         }
 
-/*
-        // ToDo at the end of round ... load hero screen
-        hero.setAttacking(null);
-        hero.getDungeon().withoutEnemy(enemy);
-        hero.setLp(MAX_LIFE);
-*/
     }
 
 }

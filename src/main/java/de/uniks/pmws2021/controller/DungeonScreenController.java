@@ -5,9 +5,11 @@ import de.uniks.pmws2021.StageManager;
 import de.uniks.pmws2021.controller.subcontroller.EnemyViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroStatViewSubController;
 import de.uniks.pmws2021.controller.subcontroller.HeroViewSubController;
+import de.uniks.pmws2021.model.Dungeon;
 import de.uniks.pmws2021.model.Enemy;
 import de.uniks.pmws2021.model.Hero;
 import de.uniks.pmws2021.model.HeroStat;
+import de.uniks.pmws2021.util.ResourceManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +27,7 @@ public class DungeonScreenController {
     private PropertyChangeListener onLpChanged = this::onLpChanged;
     private PropertyChangeListener onNextEnemyChanged = this::onNextEnemyChanged;;
     private PropertyChangeListener onCoinsChanged = this::onCoinsChanged;
+    private PropertyChangeListener onEnemyChanged = this::onEnemyChanged;;
 
     private Parent view;
     private RPGEditor editor;
@@ -40,6 +43,8 @@ public class DungeonScreenController {
     private Label heroCoinsLabel;
     private Button attackButton;
     private Button defenseButton;
+    private boolean nextEnemyNull;
+    private long counter;
 
     public DungeonScreenController(Parent view, RPGEditor editor) {
         this.view = view;
@@ -47,6 +52,7 @@ public class DungeonScreenController {
         this.heroSubViewControllerList = new ArrayList<>();
         this.enemySubViewControllerList = new ArrayList<>();
         this.heroStatSubViewControllerList = new ArrayList<>();
+        counter = this.editor.getDungeon().getEnemy().stream().count();
     }
 
     public void init() {
@@ -80,27 +86,38 @@ public class DungeonScreenController {
         this.editor.getDungeon().getHero().addPropertyChangeListener(Hero.PROPERTY_COINS, onCoinsChanged);
         this.editor.getDungeon().getHero().getAttacking().addPropertyChangeListener(Enemy.PROPERTY_LP, onLpChanged);
         this.editor.getDungeon().getHero().getAttacking().addPropertyChangeListener(Enemy.PROPERTY_NEXT, onNextEnemyChanged);
+        this.editor.getDungeon().addPropertyChangeListener(Dungeon.PROPERTY_ENEMY, onEnemyChanged);
+
+    }
+
+    public void onEnemyChanged(PropertyChangeEvent event) {
+        // count enemies
+        counter -= 1;
+
+        if (counter == 0 ) {
+            Alert info = new Alert(Alert.AlertType.INFORMATION);
+            info.setHeaderText("Dungeon clear!");
+            info.setContentText("Return to main Menu");
+            info.showAndWait();
+            // save Hero and go Back to hero Screen
+            ResourceManager.saveHero(this.editor.getDungeon().getHero());
+            StageManager.showHeroScreen();
+        }
 
     }
 
     public void onNextEnemyChanged(PropertyChangeEvent event) {
-
+        
     }
 
     public void onCoinsChanged(PropertyChangeEvent event) {
         heroCoinsLabel.setText(String.valueOf(this.editor.getDungeon().getHero().getCoins()));
     }
 
-
+//event.getNewValue().equals(0) &&
     public void onLpChanged(PropertyChangeEvent event) {
         //ToDo: extend if condition so it works properly
-        if (event.getNewValue().equals(0) && this.editor.getDungeon().getEnemy().isEmpty()) {
-            Alert info = new Alert(Alert.AlertType.INFORMATION);
-            info.setHeaderText("Dungeon clear!");
-            info.setContentText("Return to main Menu");
-            info.showAndWait();
-            StageManager.showHeroScreen();
-        }
+
     }
 
 
@@ -153,7 +170,7 @@ public class DungeonScreenController {
 
     private void resetButtonOnClick(ActionEvent actionEvent) {
         // set all values to beginning and show DungeonScreen
-        StageManager.showDungeonScreen();
+        ResourceManager.saveHero(this.editor.getDungeon().getHero());
     }
 
     // ===========================================================================================

@@ -104,6 +104,7 @@ public class EvaluateFightTest {
         Hero myHero = new Hero();
         myHero.setLp(100);
         myHero.setCoins(100);
+        myHero.setMode("normal");
         myHero.withStats(attackStats, defenceStats);
 
         // create an enemy
@@ -145,6 +146,7 @@ public class EvaluateFightTest {
         Hero myHero = new Hero();
         myHero.setLp(100);
         myHero.setCoins(100);
+        myHero.setMode("hc");
         myHero.withStats(attackStats, defenceStats);
 
         // create enemies
@@ -154,8 +156,8 @@ public class EvaluateFightTest {
 
         /* test implementation error: forgot to set coins and attribute typos in stance */
         myEnemy.setDef(10).setAtk(30).setLp(10).setName("Kotzilla").setAttacking(myHero).setStance("defend").setCoins(10);
-        myEnemy1.setDef(100).setAtk(10).setLp(10).setName("Chicken").setAttacking(myHero).setStance("attack").setCoins(10);
-        myEnemy2.setDef(10).setAtk(10).setLp(10).setName("The Wall").setAttacking(myHero).setStance("attack").setCoins(20);
+        myEnemy1.setDef(100).setAtk(40).setLp(10).setName("Chicken").setStance("attack").setCoins(10);
+        myEnemy2.setDef(10).setAtk(10).setLp(10).setName("The Wall").setStance("attack").setCoins(20);
         myEnemy.setNext(myEnemy1);
         myEnemy1.setNext(myEnemy2);
         /* test implementation error: forget to set targeting hero */
@@ -169,12 +171,18 @@ public class EvaluateFightTest {
         // call method
         gc.heroEngagesFight("attack", myHero);
         gc.evaluateFight(myEnemy, myHero);
+
+        // two enemies left
+        Assert.assertEquals(2, dungeon.getEnemy().size());
+
         gc.heroEngagesFight("attack", myHero);
-        gc.evaluateFight(myEnemy, myHero);
+        gc.evaluateFight(myEnemy1, myHero);
+
+        // hero not yet healed to max
+        Assert.assertEquals(60, myHero.getLp());
+
         gc.heroEngagesFight("attack", myHero);
-        gc.evaluateFight(myEnemy, myHero);
-        gc.heroEngagesFight("attack", myHero);
-        gc.evaluateFight(myEnemy, myHero);
+        gc.evaluateFight(myEnemy2, myHero);
 
 
         // check if enemy is dead && check if heal to max && ...
@@ -190,9 +198,11 @@ public class EvaluateFightTest {
         Assert.assertEquals(100, myHero.getLp());
         // Assert.assertEquals(140, myHero.getCoins());
 
+        Assert.assertEquals(0, dungeon.getEnemy().size());
         Assert.assertEquals(0, myEnemy.getLp());
         Assert.assertEquals(0, myEnemy1.getLp());
-        Assert.assertEquals(10, myEnemy2.getLp());
+        Assert.assertEquals(0, myEnemy2.getLp());
+        Assert.assertEquals(0, myEnemy2.getCoins());
         Assert.assertEquals(140, myHero.getCoins());
         //Assert.assertNull(myHero.getAttacking());
         //Assert.assertNull(myEnemy.getNext());
