@@ -41,15 +41,14 @@ public class RPGEditor {
         heroes.add(hero);
         return hero;
     }
-    // returns ArrayList heroes
 
+    // returns ArrayList heroes
     public ArrayList<Hero> getHeroes() {
         // some test heroes
         return this.heroes;
     }
+
     // returns hero if included in ArrayList heroes
-
-
     public Hero getFromHeroes(String name) {
         for (Hero hero : heroes
         ) {

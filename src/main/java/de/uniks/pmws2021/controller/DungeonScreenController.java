@@ -45,6 +45,7 @@ public class DungeonScreenController {
     private Button defenseButton;
     private long counter;
 
+
     public DungeonScreenController(Parent view, RPGEditor editor) {
         this.view = view;
         this.editor = editor;
@@ -89,6 +90,7 @@ public class DungeonScreenController {
 
     }
 
+
     public void onEnemyChanged(PropertyChangeEvent event) {
         // count enemies
         counter -= 1;
@@ -106,7 +108,7 @@ public class DungeonScreenController {
     }
 
     public void onNextEnemyChanged(PropertyChangeEvent event) {
-        
+
     }
 
     public void onCoinsChanged(PropertyChangeEvent event) {
@@ -147,6 +149,7 @@ public class DungeonScreenController {
         this.editor.getDungeon().getHero().getAttacking().removePropertyChangeListener(Enemy.PROPERTY_NEXT, onNextEnemyChanged);
         this.editor.getDungeon().removePropertyChangeListener(Dungeon.PROPERTY_ENEMY, onEnemyChanged);
 
+
     }
 
 
@@ -172,13 +175,14 @@ public class DungeonScreenController {
     }
 
     private void resetButtonOnClick(ActionEvent actionEvent) {
+        // start dungeon again
         // ToDo: set all values to beginning and show DungeonScreen
-
+        this.editor.enterDungeon(this.editor.haveHero(this.editor.getDungeon().getHero().getName(),this.editor.getDungeon().getHero().getMode()));
+        this.init();
     }
 
     // ===========================================================================================
     // additional Methods
-
     // ===========================================================================================
 
     // lookup enemySubView

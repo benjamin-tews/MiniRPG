@@ -12,11 +12,11 @@ import java.util.List;
 
 public class ResourceManager {
     // Choose your own SAVED_HEROES_FOLDER_NAME and SAVED_HEROES_FILE_NAME
-    private static final Path SAVED_HEROES_FOLDER_NAME = Path.of("database");
-    private static final Path SAVED_HEROES_FILE_NAME = Path.of("myHeroes.yaml");
+    private static final String SAVED_HEROES_FOLDER_NAME = "database";
+    private static final String SAVED_HEROES_FILE_NAME = "myHeroes.yaml";
     // Add the saved-hero-folder-name to your .gitignore
-    private static final Path HERO_FOLDER = Path.of("database");
-    private static final Path HERO_FILE = HERO_FOLDER.resolve("myHeroes.yaml");
+    private static final Path HERO_FOLDER = Path.of(SAVED_HEROES_FOLDER_NAME);
+    private static final Path HERO_FILE = HERO_FOLDER.resolve(SAVED_HEROES_FILE_NAME);
 
     // static constructor magic to create the file if absent
     static {
@@ -36,10 +36,9 @@ public class ResourceManager {
     public static List<Hero> loadAllHeroes() {
         List<Hero> heroList = new ArrayList<>();
 
-        // try to read heroList from File
-        String heroesString = null;
         try {
-            heroesString = Files.readString(HERO_FILE);
+            // try to read heroList from File
+            String heroesString = Files.readString(HERO_FILE);
 
             // parse yaml-string to YamlIdMap
             YamlIdMap yamlIdMap = new YamlIdMap(Hero.class.getPackageName());
@@ -55,7 +54,6 @@ public class ResourceManager {
                 }
             }
 
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,7 +62,7 @@ public class ResourceManager {
 
     }
 
-    public static void saveHero(Hero victor) {
+    public static void saveHero(Hero hero) {
 
 
         // save as .yaml
@@ -72,11 +70,10 @@ public class ResourceManager {
             // load all existing heroes
             List<Hero> oldHeroes = loadAllHeroes();
 
-            // ToDo: delete existing hero with the same name as the victor
-            //oldHeroes.removeIf(oldHeroes -> oldHeroes.getName().equals(victor));
+            oldHeroes.removeIf(Hero -> oldHeroes.contains(hero));
 
             // add copy of victor to list ToDo: save HeroStats
-            oldHeroes.add(victor);
+            oldHeroes.add(hero);
 
             // serialize as yaml
             YamlIdMap yamlIdMap = new YamlIdMap(Hero.class.getPackageName());

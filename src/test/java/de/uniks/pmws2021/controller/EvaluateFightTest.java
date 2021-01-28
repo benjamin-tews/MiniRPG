@@ -23,6 +23,7 @@ public class EvaluateFightTest {
         Hero myHero = new Hero();
         myHero.setLp(100);
         myHero.setCoins(100);
+        myHero.setMode("normal");
         myHero.withStats(attackStats, defenceStats);
 
         // create an enemy
@@ -59,6 +60,7 @@ public class EvaluateFightTest {
         // create Hero with stats and coins and so ...
         Hero myHero = new Hero();
         myHero.setLp(50);
+        myHero.setMode("normal");
         myHero.setCoins(100);
         /**/
         myHero.setName("Bibabutzemann");

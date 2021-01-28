@@ -46,7 +46,6 @@ public class PropertyChangeTest extends ApplicationTest {
         Label enemyNameLabel = lookup("#EnemyNameLabel").query();
         Assert.assertEquals("Shinigami", enemyNameLabel.getText());
 
-        //  2.  Prüfen, ob die View die initialen Daten anzeigt
         Assert.assertEquals("attack", app.getModel().getDungeon().getEnemy().get(0).getStance());
         Assert.assertEquals(3, app.getModel().getDungeon().getEnemy().stream().count());
         Label enemyLpLabel = lookup("#EnemyLpLabel").query();
@@ -55,9 +54,6 @@ public class PropertyChangeTest extends ApplicationTest {
         Label heroValueLabel = lookup("#ValueLabel").query();
         Assert.assertEquals("50", heroCoinsLabel.getText());
         Button attackButton = lookup("#AttackButton").query();
-
-        //  3.  Daten im Modell ändern, z.B. hero.setLp(...), hero.setAttacking(...), stat.setLevel(...)...
-        //  ...(Hier-durch werden die PropertyChangeEvents erzeugt)
 
         Platform.runLater( () -> app.getModel().getDungeon().getHero().setCoins(100) );
         WaitForAsyncUtils.waitForFxEvents();
@@ -70,7 +66,6 @@ public class PropertyChangeTest extends ApplicationTest {
         clickOn(attackButton);
         WaitForAsyncUtils.waitForFxEvents();
 
-        //  4.  Prüfen, ob die View die geänderten Daten anzeigt
         Assert.assertEquals("50/30", enemyLpLabel.getText());
         Assert.assertEquals("50", heroValueLabel.getText());
 
