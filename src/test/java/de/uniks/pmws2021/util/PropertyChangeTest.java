@@ -1,10 +1,7 @@
 package de.uniks.pmws2021.util;
 
-import de.uniks.pmws2021.RPGEditor;
 import de.uniks.pmws2021.StageManager;
-import de.uniks.pmws2021.model.Hero;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;

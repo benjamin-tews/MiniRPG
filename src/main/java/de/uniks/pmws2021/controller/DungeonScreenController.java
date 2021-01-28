@@ -148,8 +148,6 @@ public class DungeonScreenController {
         this.editor.getDungeon().getHero().removePropertyChangeListener(Hero.PROPERTY_LP, onLpChanged);
         this.editor.getDungeon().getHero().getAttacking().removePropertyChangeListener(Enemy.PROPERTY_NEXT, onNextEnemyChanged);
         this.editor.getDungeon().removePropertyChangeListener(Dungeon.PROPERTY_ENEMY, onEnemyChanged);
-
-
     }
 
 
@@ -226,10 +224,6 @@ public class DungeonScreenController {
         }
     }
 
-    // iterate hero stats
-    // load fxml for every stat
-    // create and init HeroStatViewSubController for each
-    // add to heroStatContainer in dungeonView
     private void initHeroStatViewSubController() {
         this.heroStatSubView.getChildren().clear();
         for (HeroStat heroStat : this.editor.getDungeon().getHero().getStats()
